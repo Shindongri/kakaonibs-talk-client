@@ -2,6 +2,13 @@ import React, { FC } from 'react'
 import styled, { createGlobalStyle, keyframes } from 'styled-components'
 import reset from 'styled-reset'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import createSagaMiddleware from 'redux-saga'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
+import rootReducer from './modules'
+import rootSaga from './sagas'
 
 import Sidebar from './components/Sidebar'
 
@@ -41,18 +48,25 @@ const Container = styled.div`
   }
 `
 
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)))
+
+sagaMiddleware.run(rootSaga)
+
 const App: FC = () => (
-  <Router>
-    <Container>
-      <Sidebar />
-      <Switch>
-        <Route exact path="/friends" component={ Friends } />
-        <Route path="/chats" component={ Chats } />
-        <Route path="/setting" component={ Setting } />
-      </Switch>
-      <GlobalStyle />
-    </Container>
-  </Router>
+  <Provider store={ store }>
+    <Router>
+      <Container>
+        <Sidebar />
+        <Switch>
+          <Route exact path="/friends" component={ Friends } />
+          <Route path="/chats" component={ Chats } />
+          <Route path="/setting" component={ Setting } />
+        </Switch>
+        <GlobalStyle />
+      </Container>
+    </Router>
+  </Provider>
 )
 
 export default App
