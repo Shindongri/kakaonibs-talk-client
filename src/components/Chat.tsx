@@ -62,7 +62,7 @@ const Time = styled.small`
   font-size: 0.5rem;
 `
 
-type ChatProps = {
+export interface ChatProps {
   imageUrl?: string;
   name: string;
   latestMessage: string;

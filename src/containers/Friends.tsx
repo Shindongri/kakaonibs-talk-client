@@ -1,11 +1,13 @@
 import React from 'react'
-import { map } from 'lodash/fp'
+import { map, flow, filter } from 'lodash/fp'
 import styled from 'styled-components'
 
 import TopHeader from '../components/TopHeader'
 import InputSearch from '../components/InputSearch'
 
-import { FriendList, FriendItem } from '../components/Friend'
+import { FriendList, FriendItem, FriendProps } from '../components/Friend'
+
+import MockData from './mock.json'
 
 const HeaderTitle = styled.h6`
   font-size: 13px;
@@ -26,7 +28,12 @@ const Friends: React.FC = () => {
           <HeaderTitle>내 프로필</HeaderTitle>
         </header>
         <FriendList>
-          <FriendItem key={ 0 } name="신동리" isMe />
+          {
+            flow(
+              filter(({ isMe }) => isMe),
+              map((item: FriendProps) => <FriendItem key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } isMe={ item.isMe } />)
+            )(MockData.friends)
+          }
         </FriendList>
       </section>
       <section>
@@ -35,7 +42,10 @@ const Friends: React.FC = () => {
         </header>
         <FriendList>
           {
-            map(({ id, imageUrl, name, tag, isMe }) => <FriendItem key={ id } name={ name } imageUrl={ imageUrl } tag={ tag } isMe={ isMe } />)([])
+            flow(
+              filter(({ isMe }) => !isMe),
+              map((item: FriendProps) => <FriendItem key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } isMe={ item.isMe } />)
+            )(MockData.friends)
           }
         </FriendList>
       </section>

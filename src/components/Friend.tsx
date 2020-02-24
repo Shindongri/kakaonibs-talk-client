@@ -36,7 +36,7 @@ const Col = styled.div`
 
 const Tag = styled.span``
 
-interface FriendProps {
+export interface FriendProps {
   id?: number;
   imageUrl?: string;
   name: string;

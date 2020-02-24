@@ -6,6 +6,8 @@ import InputSearch from '../components/InputSearch'
 
 import { ChatItem, ChatList }  from '../components/Chat'
 
+import MockData from './mock.json'
+
 const Chats: React.FC = () => {
   return (
     <main>
@@ -14,7 +16,7 @@ const Chats: React.FC = () => {
       <section>
         <ChatList>
           {
-            map(({ id, name, latestMessage, updatedAt }) => <ChatItem key={ id } name={ name } latestMessage={ latestMessage } updatedAt={ updatedAt } />)([])
+            map(({ id, name, latestMessage, updatedAt }) => <ChatItem key={ id } name={ name } latestMessage={ latestMessage } updatedAt={ updatedAt } />)(MockData.chats)
           }
         </ChatList>
       </section>

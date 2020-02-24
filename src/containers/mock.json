@@ -1,0 +1,39 @@
+{
+  "friends": [
+    {
+      "id": 0,
+      "name": "신동리",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": true
+    },
+    {
+      "id": 1,
+      "name": "김다혜",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": false
+    },
+    {
+      "id": 2,
+      "name": "강기찬",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": false
+    }
+  ],
+  "chats": [
+    {
+      "id": 0,
+      "name": "김다혜",
+      "latestMessage": "뭐하니?",
+      "updatedAt": "오후 4시"
+    },
+    {
+      "id": 1,
+      "name": "강기찬",
+      "latestMessage": "언제와",
+      "updatedAt": "오후 8시"
+    }
+  ]
+}
