@@ -1,17 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import EmptyImage from '../assets/images/kakao-friends.png'
 
-const Rows = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 7px 0;
-`
+import { Link } from 'react-router-dom'
 
 const Row = styled.li`
   position: relative;
   padding: 4px;
-  margin-bottom: 10px;
   border-bottom: 1px solid #F7F7F7;
+  margin-bottom: 10px;
   &:hover {
     background-color: #f2f2f2;
     opacity: .9;
@@ -63,30 +60,28 @@ const Time = styled.small`
 `
 
 export interface ChatProps {
+  id: number;
   imageUrl?: string;
   name: string;
   latestMessage: string;
   updatedAt: string;
 }
 
-export const ChatItem: React.FC<ChatProps> = ({ imageUrl, name, latestMessage, updatedAt }) => (
+const Chat: React.FC<ChatProps> = ({ id, imageUrl, name, latestMessage, updatedAt }) => (
   <Row>
-    <Col>
-      <Avatar src={ imageUrl } alt="" />
-      <Content>
-        <h3 className='name'>{ name }</h3>
-        <p className='message'>{ latestMessage }</p>
-      </Content>
-    </Col>
-    <Col>
-      <Time>{ updatedAt }</Time>
-    </Col>
+    <Link to={ `/chats/${ id }` }>
+      <Col>
+        <Avatar src={ imageUrl || EmptyImage } alt="" />
+        <Content>
+          <h3 className='name'>{ name }</h3>
+          <p className='message'>{ latestMessage }</p>
+        </Content>
+      </Col>
+      <Col>
+        <Time>{ updatedAt }</Time>
+      </Col>
+    </Link>
   </Row>
 )
 
-
-export const ChatList: React.FC = ({ children }) => (
-  <Rows>
-    { children }
-  </Rows>
-)
+export default Chat

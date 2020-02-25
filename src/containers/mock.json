@@ -20,6 +20,26 @@
       "imageUrl": null,
       "tag": "",
       "isMe": false
+    },
+    {
+      "id": 3,
+      "name": "김가희",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": false
+    },
+    {
+      "id": 4,
+      "name": "정수라",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": false
+    },{
+      "id": 5,
+      "name": "구민석",
+      "imageUrl": null,
+      "tag": "",
+      "isMe": false
     }
   ],
   "chats": [

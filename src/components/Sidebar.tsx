@@ -10,6 +10,8 @@ const Container = styled.nav`
   position: fixed;
   top: 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledIcon = styled(Icon)`
@@ -21,7 +23,7 @@ const StyledIcon = styled(Icon)`
 const Sidebar: React.FC = () => {
   return (
     <Container>
-      <Link to="/friends">
+      <Link to="/users">
         <StyledIcon type="user" />
       </Link>
       <Link to="/chats">

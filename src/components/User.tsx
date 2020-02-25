@@ -1,11 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const Rows = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 7px 0;
-`
+import EmptyImage from '../assets/images/kakao-friends.png'
 
 const Row = styled.li`
   margin-bottom: 10px;
@@ -36,7 +31,7 @@ const Col = styled.div`
 
 const Tag = styled.span``
 
-export interface FriendProps {
+export interface UserProps {
   id?: number;
   imageUrl?: string;
   name: string;
@@ -44,29 +39,22 @@ export interface FriendProps {
   isMe?: boolean;
 }
 
-export const FriendItem: React.FC<FriendProps> = ({ imageUrl, name, tag }) => {
+const User: React.FC<UserProps> = ({ imageUrl, name, tag }) => {
   return (
     <Row>
       <Col>
-        <img className="avatar" src={ imageUrl } alt="" />
+        <img className="avatar" src={ imageUrl || EmptyImage } alt="" />
         <span className="name">{ name }</span>
       </Col>
       {
-        tag ? (
+        tag && (
           <Col>
             <Tag>{ tag }</Tag>
           </Col>
-        ) : null
+        )
       }
     </Row>
   )
 }
 
-
-export const FriendList: React.FC = ({ children }) => {
-  return (
-    <Rows>
-      { children }
-    </Rows>
-  )
-}
+export default User

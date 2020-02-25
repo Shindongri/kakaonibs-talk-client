@@ -6,7 +6,7 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 8px;
+  padding: 12px 12px 8px;
   .text {
     font-weight: bold;
   }

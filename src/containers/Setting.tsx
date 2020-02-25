@@ -3,6 +3,16 @@ import styled from 'styled-components'
 
 import TopHeader from '../components/TopHeader'
 import KakaoTalkLogoImage from '../assets/images/kakao-talk.png'
+import Sidebar from '../components/Sidebar'
+
+const Container = styled.div`
+  nav {
+    width: 15%;
+  }
+  main {
+    margin-left: 15%;
+  }
+`
 
 const KakaoTalkLogoWrapper = styled.div`
   margin: 24px 0;
@@ -33,19 +43,22 @@ const MenuList = styled.ul`
 `
 
 const Setting: React.FC = () => (
-  <main>
-    <TopHeader text='더보기' icon='setting' />
-    <KakaoTalkLogoWrapper>
-      <KakaoTalkLogo src={ KakaoTalkLogoImage } alt="" />
-    </KakaoTalkLogoWrapper>
-    <MenuList>
-      <li>새소식</li>
-      <li>공지사항</li>
-      <li>환경설정</li>
-      <li>도움말</li>
-      <li>카카오톡 정보</li>
-    </MenuList>
-  </main>
+  <Container>
+    <Sidebar />
+    <main>
+      <TopHeader text='더보기' icon='setting' />
+      <KakaoTalkLogoWrapper>
+        <KakaoTalkLogo src={ KakaoTalkLogoImage } alt="" />
+      </KakaoTalkLogoWrapper>
+      <MenuList>
+        <li>새소식</li>
+        <li>공지사항</li>
+        <li>환경설정</li>
+        <li>도움말</li>
+        <li>카카오톡 정보</li>
+      </MenuList>
+    </main>
+  </Container>
 )
 
 export default Setting
