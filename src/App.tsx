@@ -1,20 +1,26 @@
 import React, { FC } from 'react'
-import styled, { createGlobalStyle, keyframes } from 'styled-components'
-import reset from 'styled-reset'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+import { createGlobalStyle, keyframes } from 'styled-components'
+import reset from 'styled-reset'
+
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import rootReducer from './modules'
 import rootSaga from './sagas'
 
-import Sidebar from './components/Sidebar'
-
-// import Login from './containers/Login'
-import Friends from './containers/Friends'
+import Login from './containers/Login'
+import Users from './containers/Users'
 import Chats from './containers/Chats'
+import ChatDetail from './containers/ChatDetail'
 import Setting from './containers/Setting'
 
 const PopIn = keyframes`
@@ -38,34 +44,35 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const Container = styled.div`
-  nav {
-    width: 15%;
-  }
-  main {
-    margin-left: 15%;
-    padding: 12px;
-  }
-`
+/* redux-persist config */
+const persistConfig = {
+  key: 'root',
+  storage,
+}
 
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+/* redux-saga config */
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)))
+const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)))
+const persistor = persistStore(store)
 
 sagaMiddleware.run(rootSaga)
 
 const App: FC = () => (
   <Provider store={ store }>
-    <Router>
-      <Container>
-        <Sidebar />
+    <PersistGate persistor={ persistor }>
+      <Router>
         <Switch>
-          <Route exact path="/friends" component={ Friends } />
-          <Route path="/chats" component={ Chats } />
+          <Route exact path="/chats" component={ Chats } />
+          <Route path="/chats/:id" component={ ChatDetail } />
+          <Route path="/login" component={ Login } />
+          <Route path="/users" component={ Users } />
           <Route path="/setting" component={ Setting } />
         </Switch>
         <GlobalStyle />
-      </Container>
-    </Router>
+      </Router>
+    </PersistGate>
   </Provider>
 )
 
