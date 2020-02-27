@@ -16,16 +16,17 @@ const Container = styled.header`
 
 interface ChatDetailHeaderProps {
   name: string;
+  showDrawer: () => void;
 }
 
-const ChatDetailHeader: React.FC<ChatDetailHeaderProps> = ({ name }) => {
+const ChatDetailHeader: React.FC<ChatDetailHeaderProps> = ({ name, showDrawer }) => {
   const history = useHistory()
 
   return (
     <Container>
       <Icon type="left" onClick={ () => history.goBack() } />
       <h3>{ name }</h3>
-      <Icon type="menu" />
+      <Icon type="menu" onClick={ showDrawer } />
     </Container>
   )
 }

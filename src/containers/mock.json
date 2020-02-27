@@ -1,45 +1,33 @@
 {
-  "friends": [
-    {
-      "id": 0,
-      "name": "신동리",
-      "imageUrl": null,
-      "tag": "",
-      "isMe": true
-    },
+  "users": [
     {
       "id": 1,
       "name": "김다혜",
       "imageUrl": null,
-      "tag": "",
-      "isMe": false
+      "tag": ""
     },
     {
       "id": 2,
       "name": "강기찬",
       "imageUrl": null,
-      "tag": "",
-      "isMe": false
+      "tag": ""
     },
     {
       "id": 3,
       "name": "김가희",
       "imageUrl": null,
-      "tag": "",
-      "isMe": false
+      "tag": ""
     },
     {
       "id": 4,
       "name": "정수라",
       "imageUrl": null,
-      "tag": "",
-      "isMe": false
+      "tag": ""
     },{
       "id": 5,
       "name": "구민석",
       "imageUrl": null,
-      "tag": "",
-      "isMe": false
+      "tag": ""
     }
   ],
   "chats": [

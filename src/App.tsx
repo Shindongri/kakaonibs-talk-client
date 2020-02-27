@@ -1,20 +1,19 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { createGlobalStyle, keyframes } from 'styled-components'
 import reset from 'styled-reset'
 
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import rootReducer from './modules'
+import persistedReducer  from './modules'
 import rootSaga from './sagas'
 
 import Login from './containers/Login'
@@ -44,30 +43,23 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-/* redux-persist config */
-const persistConfig = {
-  key: 'root',
-  storage,
-}
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
 /* redux-saga config */
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)))
+const enhancer = process.env.NODE_ENV === 'production' ? compose(applyMiddleware(sagaMiddleware)) : composeWithDevTools(applyMiddleware(sagaMiddleware))
+const store = createStore(persistedReducer, enhancer)
 const persistor = persistStore(store)
 
 sagaMiddleware.run(rootSaga)
 
-const App: FC = () => (
+const App: React.FC = () => (
   <Provider store={ store }>
-    <PersistGate persistor={ persistor }>
+    <PersistGate loading={ null } persistor={ persistor }>
       <Router>
         <Switch>
           <Route exact path="/chats" component={ Chats } />
           <Route path="/chats/:id" component={ ChatDetail } />
           <Route path="/login" component={ Login } />
-          <Route path="/users" component={ Users } />
+          <Route exact path={['/', '/users']} component={ Users } />
           <Route path="/setting" component={ Setting } />
         </Switch>
         <GlobalStyle />
