@@ -8,7 +8,7 @@ const useAuth = () => {
   const location = useLocation()
   const history = useHistory()
 
-  const isLogged = useSelector((state: RootState) => state.user.isLogged)
+  const isLogged = useSelector((state: RootState) => state.auth.isLogged)
 
   useEffect(() => {
     if (!isLogged) {

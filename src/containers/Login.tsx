@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/user'
+import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/auth'
 
 import LogoImage from '../assets/images/kakao-talk-color.svg'
 

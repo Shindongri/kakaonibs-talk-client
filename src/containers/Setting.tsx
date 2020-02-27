@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/user'
+import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/auth'
 import TopHeader from '../components/TopHeader'
 import Sidebar from '../components/Sidebar'
 import useAuth from '../hooks/useAuth'
