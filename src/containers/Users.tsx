@@ -1,15 +1,18 @@
 import React from 'react'
-import { map, flow, filter } from 'lodash/fp'
+import { useSelector } from 'react-redux'
+import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
+import { RootState } from '../modules'
 import TopHeader from '../components/TopHeader'
 import InputSearch from '../components/InputSearch'
-
 import User, { UserProps } from '../components/User'
 import UserList from '../components/UserList'
+import Sidebar from '../components/Sidebar'
+
+import useAuth from '../hooks/useAuth'
 
 import MockData from './mock.json'
-import Sidebar from '../components/Sidebar'
 
 const Container = styled.div`
   nav {
@@ -34,6 +37,10 @@ const HeaderTitle = styled.h6`
 `
 
 const Users: React.FC = () => {
+  useAuth()
+
+  const userName = useSelector((state: RootState) => state.user.userName)
+
   return (
     <Container>
       <Sidebar />
@@ -45,12 +52,7 @@ const Users: React.FC = () => {
             <HeaderTitle>내 프로필</HeaderTitle>
           </header>
           <UserList>
-            {
-              flow(
-                filter(({ isMe }) => isMe),
-                map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } isMe={ item.isMe } />)
-              )(MockData.friends)
-            }
+            <User key={ 0 } name={ userName } />
           </UserList>
         </StyledSection>
         <StyledSection>
@@ -59,10 +61,7 @@ const Users: React.FC = () => {
           </header>
           <UserList>
             {
-              flow(
-                filter(({ isMe }) => !isMe),
-                map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } isMe={ item.isMe } />)
-              )(MockData.friends)
+              map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } />)(MockData.users)
             }
           </UserList>
         </StyledSection>

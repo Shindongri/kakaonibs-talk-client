@@ -1,5 +1,6 @@
 import React from 'react'
 import { map } from 'lodash/fp'
+import styled from 'styled-components'
 
 import TopHeader from '../components/TopHeader'
 import InputSearch from '../components/InputSearch'
@@ -8,8 +9,9 @@ import Sidebar from '../components/Sidebar'
 import ChatList  from '../components/ChatList'
 import Chat  from '../components/Chat'
 
+import useAuth from '../hooks/useAuth'
+
 import MockData from './mock.json'
-import styled from "styled-components";
 
 const Container = styled.div`
   nav {
@@ -21,6 +23,8 @@ const Container = styled.div`
 `
 
 const Chats: React.FC = () => {
+  useAuth()
+
   return (
     <Container>
       <Sidebar />

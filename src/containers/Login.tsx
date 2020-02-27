@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Button } from 'antd'
+import { useDispatch } from 'react-redux'
+import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/user'
 
 import LogoImage from '../assets/images/kakao-talk-color.svg'
 
@@ -28,12 +31,26 @@ const StyledInput = styled(Input)`
 `
 
 const Login: React.FC = () => {
+  const [userName, setUserName] = useState(null)
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const handleInput = useCallback(e => {
+    setUserName(e.target.value)
+  }, [])
+
+  const login = useCallback(() => {
+    dispatch({ type: SET_USER_NAME, payload: userName })
+    dispatch({ type: SET_IS_LOGGED, payload: true })
+    history.push('/users')
+  }, [userName])
+
   return (
     <Container>
       <Logo src={ LogoImage } alt="" />
       <LoginContainer>
-        <StyledInput placeholder="아이디를 입력해주세요." />
-        <Button>로그인</Button>
+        <StyledInput placeholder="아이디를 입력해주세요." onInput={ handleInput } onPressEnter={ login } />
+        <Button onClick={ login }>로그인</Button>
       </LoginContainer>
     </Container>
   )

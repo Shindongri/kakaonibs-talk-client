@@ -33,10 +33,9 @@ const Tag = styled.span``
 
 export interface UserProps {
   id?: number;
-  imageUrl?: string;
-  name: string;
+  imageUrl?: string | null;
+  name: string | null;
   tag?: string;
-  isMe?: boolean;
 }
 
 const User: React.FC<UserProps> = ({ imageUrl, name, tag }) => {
