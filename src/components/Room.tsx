@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 
 import { Room as RoomProps } from '../modules/room'
+
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 import { Link } from 'react-router-dom'
@@ -63,14 +64,13 @@ const Time = styled.small`
 `
 
 
-const Room: React.FC<RoomProps> = ({ _id, imageURL, title, latestMessage, updatedAt }) => (
+const Room: React.FC<RoomProps> = ({ _id, imageURL, opponent, updatedAt }) => (
   <Row>
     <Link to={ `/room/${ _id }` }>
       <Col>
         <Avatar src={ imageURL || EmptyImage } alt="" />
         <Content>
-          <h3>{ title }</h3>
-          <p>{ latestMessage }</p>
+          <h3>{ opponent }</h3>
         </Content>
       </Col>
       <Col>

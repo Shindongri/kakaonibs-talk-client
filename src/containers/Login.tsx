@@ -5,7 +5,7 @@ import { Input, Button } from 'antd'
 import { useDispatch } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 
-import {SET_USER_NAME, SET_IS_LOGGED, SET_UUID, REQUEST_SIGNIN} from '../modules/auth'
+import { REQUEST_SIGNIN } from '../modules/auth'
 
 import LogoImage from '../assets/images/kakao-talk-color.svg'
 

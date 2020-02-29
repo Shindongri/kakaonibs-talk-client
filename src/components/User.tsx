@@ -31,22 +31,13 @@ const Col = styled.div`
   }
 `
 
-const Tag = styled.span``
-
-const User: React.FC<UserProps> = ({ id, imageUrl, name, tag }) => {
+const User: React.FC<UserProps> = ({ _id, imageURL, userName }) => {
   return (
     <Row>
       <Col>
-        <img className="avatar" src={ imageUrl || EmptyImage } alt="" />
-        <span className="name">{ name }</span>
+        <img className="avatar" src={ imageURL || EmptyImage } alt="" />
+        <span className="name">{ userName }</span>
       </Col>
-      {
-        tag && (
-          <Col>
-            <Tag>{ tag }</Tag>
-          </Col>
-        )
-      }
     </Row>
   )
 }

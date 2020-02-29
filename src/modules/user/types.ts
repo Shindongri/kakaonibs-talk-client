@@ -5,10 +5,9 @@ import * as actions from './actions'
 export type UserAction = ActionType<typeof actions>
 
 export type User = {
-  id?: number;
-  name: string | null;
-  imageUrl?: string | null;
-  tag?: string | null;
+  _id: string;
+  userName: string | null;
+  imageURL?: string | null;
 }
 
 export type UserState = User[]

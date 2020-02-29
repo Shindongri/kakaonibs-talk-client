@@ -1,6 +1,7 @@
 import { ActionType } from 'typesafe-actions'
 
 import * as actions from './actions'
+import { User as UserProps } from '../user'
 
 export type RoomAction = ActionType<typeof actions>
 
@@ -16,14 +17,13 @@ export type Chat = {
 export type Room = {
   _id: string;
   imageURL?: string;
-  title: string;
+  opponent: string;
   owner?: string;
-  latestMessage: string;
   updatedAt: string;
 }
 
 export type RoomDetail = {
-  title: string;
+  opponent: UserProps;
   me: string;
   chatList: Chat[];
 }

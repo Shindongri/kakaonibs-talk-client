@@ -51,14 +51,14 @@ const Users: React.FC = () => {
     <Container>
       <Sidebar />
       <main>
-        <TopHeader text="친구" count={ 18 } icon="user-add" />
+        <TopHeader text="친구" count={ userList.length } icon="user-add" />
         <InputSearch placeholder="이름으로 검색" />
         <StyledSection>
           <header>
             <HeaderTitle>내 프로필</HeaderTitle>
           </header>
           <UserList>
-            <User key={ 0 } name={ userName } />
+            <User key={ 0 } _id={ '' } userName={ userName } />
           </UserList>
         </StyledSection>
         <StyledSection>
@@ -67,7 +67,7 @@ const Users: React.FC = () => {
           </header>
           <UserList>
             {
-              map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } />)(userList)
+              map(({ _id, userName, imageURL }: UserProps) => <User key={ _id } _id={ _id } userName={ userName} imageURL={ imageURL } />)(userList)
             }
           </UserList>
         </StyledSection>

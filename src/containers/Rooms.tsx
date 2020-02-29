@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { map } from 'lodash/fp'
 import styled from 'styled-components'
@@ -25,25 +25,31 @@ const Container = styled.div`
 `
 
 const Rooms: React.FC = () => {
+  useAuth()
+
   const dispatch = useDispatch()
 
-  useAuth()
   useEffect(() => {
     dispatch({ type: FETCH_ROOM_LIST })
   }, [dispatch])
 
   const roomList = useSelector((state: RootState) => state.room.list)
 
+  const onCreate = useCallback(() => {
+    dispatch({ type: '' })
+  }, [])
+
+
   return (
     <Container>
       <Sidebar />
       <main>
-        <TopHeader text="채팅" icon="plus" />
+        <TopHeader text="채팅" icon="plus" menuList={ [{ id: 0, menuName: '채팅방 생성', onClick: onCreate }] } />
         <InputSearch placeholder="채팅방 이름, 참여자 검색" />
         <section>
           <RoomList>
             {
-              map(({ _id, title, latestMessage, updatedAt }) => <Room key={ _id } _id={ _id } title={ title } latestMessage={ latestMessage } updatedAt={ updatedAt } />)(roomList)
+              map(({ _id, opponent, updatedAt }) => <Room key={ _id } _id={ _id } opponent={ opponent.userName } updatedAt={ updatedAt } />)(roomList)
             }
           </RoomList>
         </section>

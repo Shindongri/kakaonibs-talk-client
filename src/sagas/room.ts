@@ -2,7 +2,14 @@ import { call, put, all, takeLatest } from 'redux-saga/effects'
 import axios from '../axios'
 
 import errorHandler from '../utils/errorHandler'
-import { FETCH_ROOM_LIST, FETCH_ROOM_DETAIL, REQUEST_CHAT, setRoomList, setRoomDetail } from '../modules/room'
+import {
+  FETCH_ROOM_LIST,
+  FETCH_ROOM_DETAIL,
+  REQUEST_CHAT,
+  setRoomList,
+  setRoomDetail,
+  REQUEST_CHAT_ROOM
+} from '../modules/room'
 
 const fetchRoomList = function* () {
   try {
@@ -42,8 +49,23 @@ const requestChat = function* ({ payload }: any) {
   }
 }
 
+const requestChatRoom = function* ({ payload }: any) {
+  try {
+    const { status, data: { statusText } } = yield call(() => axios.post('/room', { opponent: payload.opponent }))
+
+    if (status === 200 && statusText === 'OK') {
+      console.log('OK')
+    } else {
+      console.error('FAIL')
+    }
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
 export default function* roomSaga() {
   yield all([
+    takeLatest([REQUEST_CHAT_ROOM], requestChatRoom),
     takeLatest([REQUEST_CHAT], requestChat),
     takeLatest([FETCH_ROOM_LIST], fetchRoomList),
     takeLatest([FETCH_ROOM_DETAIL], fetchRoomDetail)

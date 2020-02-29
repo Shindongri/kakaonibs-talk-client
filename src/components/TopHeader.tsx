@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Icon, Dropdown, Menu as AntMenu } from 'antd'
+import { Icon, Dropdown, Menu as AntMenu, Button } from 'antd'
 import { map } from 'lodash/fp'
 
 const Container = styled.header`
@@ -15,6 +15,10 @@ const Container = styled.header`
     margin-left: 2px;
     color: #9b9b9b;
   }
+`
+
+const StyledButton = styled(Button)`
+  border: 0;
 `
 
 type TopHeaderText = '친구' | '채팅' | '더보기'
@@ -46,8 +50,9 @@ const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList }) =>
               <AntMenu.Item key={ id } onClick={ onClick }>{ menuName }</AntMenu.Item>
             ))(menuList)
           }
-        </AntMenu> }>
-        <Icon type={ icon } />
+        </AntMenu>
+      }>
+        <StyledButton icon={ icon } />
       </Dropdown>
     </Container>
   )

@@ -15,7 +15,7 @@ const Container = styled.header`
 `
 
 interface ChatDetailHeaderProps {
-  name: string;
+  name: string | null;
   showDrawer: () => void;
 }
 

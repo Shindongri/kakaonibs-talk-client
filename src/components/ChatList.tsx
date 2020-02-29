@@ -21,4 +21,4 @@ const ChatList: React.FC<ChatListProps> = ({ messageList, myUUID, emptyImage }) 
   )
 }
 
-export default ChatList
+export default React.memo(ChatList)
