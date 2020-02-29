@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
       <Link to="/users">
         <StyledIcon type="user" />
       </Link>
-      <Link to="/chats">
+      <Link to="/rooms">
         <StyledIcon type="message" />
       </Link>
       <Link to="/setting">

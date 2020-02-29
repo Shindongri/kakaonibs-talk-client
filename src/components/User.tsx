@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+
+import { User as UserProps } from '../modules/user'
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 const Row = styled.li`
@@ -31,14 +33,7 @@ const Col = styled.div`
 
 const Tag = styled.span``
 
-export interface UserProps {
-  id?: number;
-  imageUrl?: string | null;
-  name: string | null;
-  tag?: string;
-}
-
-const User: React.FC<UserProps> = ({ imageUrl, name, tag }) => {
+const User: React.FC<UserProps> = ({ id, imageUrl, name, tag }) => {
   return (
     <Row>
       <Col>

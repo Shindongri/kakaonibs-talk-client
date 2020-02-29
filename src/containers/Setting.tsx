@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { SET_USER_NAME, SET_IS_LOGGED } from '../modules/auth'
+import { REQUEST_SIGNOUT } from '../modules/auth'
 import TopHeader from '../components/TopHeader'
 import Sidebar from '../components/Sidebar'
 import useAuth from '../hooks/useAuth'
@@ -54,11 +54,10 @@ const Setting: React.FC = () => {
   const dispatch = useDispatch()
 
   const logout = useCallback(() => {
-    dispatch({ type: SET_USER_NAME, payload: null })
-    dispatch({ type: SET_IS_LOGGED, payload: false })
+    dispatch({ type: REQUEST_SIGNOUT })
 
     history.push('/login')
-  }, [])
+  }, [dispatch, history])
 
   return (
     <Container>

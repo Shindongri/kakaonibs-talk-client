@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { format } from 'date-fns'
+
+import { Room as RoomProps } from '../modules/room'
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 import { Link } from 'react-router-dom'
@@ -59,29 +62,22 @@ const Time = styled.small`
   font-size: 0.5rem;
 `
 
-export interface ChatProps {
-  id: number;
-  imageUrl?: string;
-  name: string;
-  latestMessage: string;
-  updatedAt: string;
-}
 
-const Chat: React.FC<ChatProps> = ({ id, imageUrl, name, latestMessage, updatedAt }) => (
+const Room: React.FC<RoomProps> = ({ _id, imageURL, title, latestMessage, updatedAt }) => (
   <Row>
-    <Link to={ `/chats/${ id }` }>
+    <Link to={ `/room/${ _id }` }>
       <Col>
-        <Avatar src={ imageUrl || EmptyImage } alt="" />
+        <Avatar src={ imageURL || EmptyImage } alt="" />
         <Content>
-          <h3 className='name'>{ name }</h3>
-          <p className='message'>{ latestMessage }</p>
+          <h3>{ title }</h3>
+          <p>{ latestMessage }</p>
         </Content>
       </Col>
       <Col>
-        <Time>{ updatedAt }</Time>
+        <Time>{ format(new Date(updatedAt), 'HH:mm') }</Time>
       </Col>
     </Link>
   </Row>
 )
 
-export default Chat
+export default Room

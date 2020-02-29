@@ -18,8 +18,8 @@ import rootSaga from './sagas'
 
 import Login from './containers/Login'
 import Users from './containers/Users'
-import Chats from './containers/Chats'
-import ChatDetail from './containers/ChatDetail'
+import Rooms from './containers/Rooms'
+import RoomDetail from './containers/RoomDetail'
 import Setting from './containers/Setting'
 
 const PopIn = keyframes`
@@ -56,8 +56,8 @@ const App: React.FC = () => (
     <PersistGate loading={ null } persistor={ persistor }>
       <Router>
         <Switch>
-          <Route exact path="/chats" component={ Chats } />
-          <Route path="/chats/:id" component={ ChatDetail } />
+          <Route exact path="/rooms" component={ Rooms } />
+          <Route path="/room/:id" component={ RoomDetail } />
           <Route path="/login" component={ Login } />
           <Route exact path={['/', '/users']} component={ Users } />
           <Route path="/setting" component={ Setting } />

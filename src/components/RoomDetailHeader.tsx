@@ -19,7 +19,7 @@ interface ChatDetailHeaderProps {
   showDrawer: () => void;
 }
 
-const ChatDetailHeader: React.FC<ChatDetailHeaderProps> = ({ name, showDrawer }) => {
+const RoomDetailHeader: React.FC<ChatDetailHeaderProps> = ({ name, showDrawer }) => {
   const history = useHistory()
 
   return (
@@ -31,4 +31,4 @@ const ChatDetailHeader: React.FC<ChatDetailHeaderProps> = ({ name, showDrawer })
   )
 }
 
-export default ChatDetailHeader
+export default RoomDetailHeader

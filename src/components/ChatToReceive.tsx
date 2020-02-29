@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+
+import { dateConverter } from '../utils/date'
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 const Container = styled.div`
@@ -38,21 +40,22 @@ const Chunk = styled.div`
 `
 
 interface MessageToReceiveProps {
-  imageUrl: string;
+  _id: string;
+  imageUrl?: string;
   name: string;
-  msg: string;
-  createdAt: string;
+  chat: string;
+  createdAt: Date;
 }
 
-const MessageToReceive: React.FC<MessageToReceiveProps> = ({ imageUrl, name, msg, createdAt }) => (
+const ChatToReceive: React.FC<MessageToReceiveProps> = ({ imageUrl, name, chat, createdAt }) => (
   <Container>
     <img src={ imageUrl || EmptyImage } alt="" />
     <Chunk>
       <h3>{ name }</h3>
-      <span className="text">{ msg }</span>
+      <span className="text">{ chat }</span>
     </Chunk>
-    <span className="time">{ createdAt }</span>
+    <span className="time">{ dateConverter(createdAt, 'HH:mm') }</span>
   </Container>
 )
 
-export default MessageToReceive
+export default ChatToReceive

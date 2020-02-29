@@ -1,18 +1,18 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
 import { RootState } from '../modules'
+import { FETCH_USER_LIST, User as UserProps } from '../modules/user'
+
 import TopHeader from '../components/TopHeader'
 import InputSearch from '../components/InputSearch'
-import User, { UserProps } from '../components/User'
+import User from '../components/User'
 import UserList from '../components/UserList'
 import Sidebar from '../components/Sidebar'
 
 import useAuth from '../hooks/useAuth'
-
-import MockData from './mock.json'
 
 const Container = styled.div`
   nav {
@@ -37,9 +37,15 @@ const HeaderTitle = styled.h6`
 `
 
 const Users: React.FC = () => {
-  useAuth()
+  const dispatch = useDispatch()
 
-  const userName = useSelector((state: RootState) => state.user.userName)
+  useAuth()
+  useEffect(() => {
+    dispatch({ type: FETCH_USER_LIST })
+  }, [dispatch])
+
+  const userName = useSelector((state: RootState) => state.auth.userName)
+  const userList = useSelector((state: RootState) => state.user)
 
   return (
     <Container>
@@ -61,7 +67,7 @@ const Users: React.FC = () => {
           </header>
           <UserList>
             {
-              map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } />)(MockData.users)
+              map((item: UserProps) => <User key={ item.id } name={ item.name } imageUrl={ item.imageUrl } tag={ item.tag } />)(userList)
             }
           </UserList>
         </StyledSection>

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { dateConverter } from '../utils/date'
 
 const Container = styled.div`
   display: flex;
@@ -12,25 +13,28 @@ const Container = styled.div`
     padding-bottom: 5px;
   }
   .text {
-      max-width: 50%;
+    max-width: 50%;
     margin-left: 7px;
     border-radius: 4px;
     background-color: #FFE934;
     padding: 10px 5px;
     font-size: 14px;
+    over-flow: hidden;
+    text-alli
   }
 `
 
 interface MessageToSendProps {
-  createdAt: string;
-  msg: string;
+  _id: string;
+  createdAt: Date;
+  chat: string;
 }
 
-const MessageToSend: React.FC<MessageToSendProps> = ({ createdAt, msg }) => (
+const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat }) => (
   <Container>
-    <span className="time">{ createdAt }</span>
-    <span className="text">{ msg }</span>
+    <span className="time">{ dateConverter(createdAt, 'HH:mm') }</span>
+    <span className="text">{ chat }</span>
   </Container>
 )
 
-export default MessageToSend
+export default ChatToSend
