@@ -64,7 +64,7 @@ $ yarn start
 
 ### 기능 설명
 
-* *해당 어플리케이션은 모바일 사이즈를 기준으로 개발 되었습니다.*
+*\*해당 어플리케이션은 모바일 사이즈를 기준으로 개발 되었습니다.*
 
 *- 로그인 & 로그아웃*
 
@@ -82,12 +82,6 @@ $ yarn start
 ### 구조 설계
 
 * 해당 어플리케이션은 기본적으로 [create-react-app](https://create-react-app.dev/) 으로 구성했습니다.
-
-#### *Unit Test*
-: Jest + Enzyme 을 통하여, Unit Test 를 진행했습니다.
-```bash
-$ yarn test
-```
 
 ```
 src
@@ -159,15 +153,33 @@ src
 6.  `utils`
 : Common Util Modules
 
+
+### *Unit Test*
+: Jest + Enzyme 을 통하여, Unit Test 를 진행했습니다.
+```bash
+$ yarn test
+```
+
 ## Main Dependencies
 
-- antd
-- date-fns
-- lodash
-- redux & react-redux
-- redux-saga
-- redux-persist
-- styled-components
-- socket.io-client
-- jest
-- enzyme
+- *react |* https://reactjs.org/
+
+- *antd |* https://ant.design/
+: A design system for enterprise-level products
+- *date-fns |* https://date-fns.org/
+: Modern JavaScript date utility library
+- *lodash |* https://lodash.com/docs/4.17.15
+: A modern JavaScript utility library delivering modularity, performance & extras.
+- *react-redux |* https://redux.js.org/
+: A Predictable State Container for JS Apps
+- *redux-saga |* https://redux-saga.js.org/
+:  a library that aims to make application side effects
+- *redux-persist |* https://github.com/rt2zz/redux-persist
+: Persist and rehydrate a redux store.
+- *styled-components |* https://styled-components.com/
+: Visual primitives for the component age.
+- *socket.io-client |* https://socket.io/docs/client-api/
+- *jest |* https://jestjs.io
+: Jest is a delightful JavaScript Testing Framework
+- *enzyme |* https://airbnb.io/enzyme
+: Enzyme is a JavaScript Testing utility for React
