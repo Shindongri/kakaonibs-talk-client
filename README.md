@@ -162,24 +162,24 @@ $ yarn test
 
 ## Main Dependencies
 
-- *react |* https://reactjs.org/
+- **react |** https://reactjs.org/
 
-- *antd |* https://ant.design/
+- **antd |** https://ant.design/
 : A design system for enterprise-level products
-- *date-fns |* https://date-fns.org/
+- **date-fns |** https://date-fns.org/
 : Modern JavaScript date utility library
-- *lodash |* https://lodash.com/docs/4.17.15
+- **lodash |** https://lodash.com/docs/4.17.15
 : A modern JavaScript utility library delivering modularity, performance & extras.
-- *react-redux |* https://redux.js.org/
+- **react-redux |** https://redux.js.org/
 : A Predictable State Container for JS Apps
-- *redux-saga |* https://redux-saga.js.org/
+- **redux-saga |** https://redux-saga.js.org/
 :  a library that aims to make application side effects
-- *redux-persist |* https://github.com/rt2zz/redux-persist
+- **redux-persist |** https://github.com/rt2zz/redux-persist
 : Persist and rehydrate a redux store.
-- *styled-components |* https://styled-components.com/
+- **styled-components |** https://styled-components.com/
 : Visual primitives for the component age.
-- *socket.io-client |* https://socket.io/docs/client-api/
-- *jest |* https://jestjs.io
+- **socket.io-client |** https://socket.io/docs/client-api/
+- **jest |** https://jestjs.io
 : Jest is a delightful JavaScript Testing Framework
-- *enzyme |* https://airbnb.io/enzyme
+- **enzyme |** https://airbnb.io/enzyme
 : Enzyme is a JavaScript Testing utility for React
