@@ -42,7 +42,7 @@ const Chunk = styled.div`
 interface MessageToReceiveProps {
   _id: string;
   imageUrl?: string;
-  name: string;
+  name: string | null;
   chat: string;
   createdAt: Date;
 }

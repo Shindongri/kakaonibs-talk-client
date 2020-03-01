@@ -101,7 +101,7 @@ const RoomDetail: React.FC = () => {
           </StyledDivider>
         )
       }
-      <ChatList messageList={ [...prevMessages, ...messages] } emptyImage={ EmptyImage } myUUID={ myUUID } />
+      <ChatList opponent={ opponent.userName } messageList={ [...prevMessages, ...messages] } emptyImage={ EmptyImage } myUUID={ myUUID } />
       <InputChat onInput={ onInput } onPressEnter={ onPressEnter } />
       <RoomDetailDrawer onClose={ onClose } userList={ [] } visible={ visible } />
     </Container>

@@ -13,13 +13,14 @@ const Container = styled.div`
   background-color: #ffe713;
   width: 100%;
   height: 100vh;
-  position: relative;
 `
 
 const Logo = styled.img`
-  width: 100%;
+  max-width: 375px;
   opacity: .9;
   padding: 128px 128px 64px 128px;
+  display: flex;
+  margin: auto;
 `
 
 const LoginContainer = styled.div`

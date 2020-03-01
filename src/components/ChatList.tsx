@@ -9,13 +9,14 @@ type ChatListProps = {
   messageList: ChatProps[];
   emptyImage: string;
   myUUID: string;
+  opponent: string | null;
 }
 
-const ChatList: React.FC<ChatListProps> = ({ messageList, myUUID, emptyImage }) => {
+const ChatList: React.FC<ChatListProps> = ({ opponent, messageList, myUUID, emptyImage }) => {
   return (
     <Fragment>
       {
-        map(({ _id, chat, createdAt, user }) => myUUID === user ? <ChatToSend key={ _id } _id={ _id } chat={ chat } createdAt={ createdAt } /> : <ChatToReceive key={ _id } _id={ _id } imageUrl={ emptyImage } name={ user } chat={ chat } createdAt={ createdAt }/>)(messageList)
+        map(({ _id, chat, createdAt, user }) => myUUID === user ? <ChatToSend key={ _id } _id={ _id } chat={ chat } createdAt={ createdAt } /> : <ChatToReceive key={ _id } _id={ _id } imageUrl={ emptyImage } name={ opponent } chat={ chat } createdAt={ createdAt }/>)(messageList)
       }
     </Fragment>
   )

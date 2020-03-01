@@ -49,12 +49,12 @@ const requestChat = function* ({ payload }: any) {
   }
 }
 
-const requestChatRoom = function* ({ payload }: any) {
+const requestChatRoom = function* () {
   try {
-    const { status, data: { statusText } } = yield call(() => axios.post('/room', { opponent: payload.opponent }))
+    const { status, data: { statusText, detail: { _id } } } = yield call(() => axios.post('/room'))
 
     if (status === 200 && statusText === 'OK') {
-      console.log('OK')
+      // `/room/${ _id }`
     } else {
       console.error('FAIL')
     }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { map } from 'lodash/fp'
+import { map, getOr } from 'lodash/fp'
 import styled from 'styled-components'
 
 import TopHeader from '../components/TopHeader'
@@ -12,7 +12,7 @@ import Room from '../components/Room'
 
 import useAuth from '../hooks/useAuth'
 
-import { FETCH_ROOM_LIST } from '../modules/room'
+import {FETCH_ROOM_LIST, REQUEST_CHAT_ROOM} from '../modules/room'
 import { RootState } from '../modules'
 
 const Container = styled.div`
@@ -36,9 +36,8 @@ const Rooms: React.FC = () => {
   const roomList = useSelector((state: RootState) => state.room.list)
 
   const onCreate = useCallback(() => {
-    dispatch({ type: '' })
-  }, [])
-
+    dispatch({ type: REQUEST_CHAT_ROOM })
+  }, [dispatch])
 
   return (
     <Container>
@@ -49,7 +48,7 @@ const Rooms: React.FC = () => {
         <section>
           <RoomList>
             {
-              map(({ _id, opponent, updatedAt }) => <Room key={ _id } _id={ _id } opponent={ opponent.userName } updatedAt={ updatedAt } />)(roomList)
+              map(({ _id, opponent, updatedAt }) => <Room key={ _id } _id={ _id } opponent={ getOr('', 'userName')(opponent) } updatedAt={ updatedAt } />)(roomList)
             }
           </RoomList>
         </section>
