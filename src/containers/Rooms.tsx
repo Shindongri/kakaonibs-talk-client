@@ -12,7 +12,7 @@ import Room from '../components/Room'
 
 import useAuth from '../hooks/useAuth'
 
-import {FETCH_ROOM_LIST, REQUEST_CHAT_ROOM} from '../modules/room'
+import { FETCH_ROOM_LIST, REQUEST_CHAT_ROOM } from '../modules/room'
 import { RootState } from '../modules'
 
 const Container = styled.div`
@@ -25,18 +25,16 @@ const Container = styled.div`
 `
 
 const Rooms: React.FC = () => {
-  useAuth()
-
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch({ type: FETCH_ROOM_LIST })
-  }, [dispatch])
-
   const roomList = useSelector((state: RootState) => state.room.list)
-
   const onCreate = useCallback(() => {
     dispatch({ type: REQUEST_CHAT_ROOM })
+  }, [dispatch])
+
+  useAuth()
+  useEffect(() => {
+    dispatch({ type: FETCH_ROOM_LIST })
   }, [dispatch])
 
   return (

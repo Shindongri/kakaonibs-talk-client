@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Button } from 'antd'
 import { useDispatch } from 'react-redux'
@@ -36,7 +35,6 @@ const StyledInput = styled(Input)`
 const Login: React.FC = () => {
   const [userName, setUserName] = useState(null)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const onInput = useCallback(e => {
     setUserName(e.target.value)
@@ -44,9 +42,7 @@ const Login: React.FC = () => {
 
   const login = useCallback(() => {
     dispatch({ type: REQUEST_SIGNIN, payload: { userName, uuid: uuid() } })
-
-    history.push('/users')
-  }, [userName, dispatch, history])
+  }, [userName, dispatch])
 
   return (
     <Container>

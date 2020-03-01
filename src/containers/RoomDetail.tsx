@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Divider } from 'antd'
+import { Divider, message as AntMessage } from 'antd'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { sortBy, last, flow, getOr } from 'lodash/fp'
+import { sortBy, last, flow, getOr, isEmpty } from 'lodash/fp'
 
 import socket from '../socket'
 
@@ -12,10 +12,14 @@ import InputChat from '../components/InputChat'
 
 import RoomDetailHeader from '../components/RoomDetailHeader'
 import RoomDetailDrawer from '../components/RoomDetailDrawer'
+
 import ChatList from '../components/ChatList'
 
 import useAuth from '../hooks/useAuth'
-import { FETCH_ROOM_DETAIL, REQUEST_CHAT } from '../modules/room'
+
+import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_INVITE } from '../modules/room'
+import { FETCH_USER_LIST } from '../modules/user'
+
 import { RootState } from '../modules'
 import { Chat as ChatProps } from '../modules/room'
 import { dateConverter } from '../utils/date'
@@ -51,6 +55,8 @@ const RoomDetail: React.FC = () => {
   const opponent = useSelector((state: RootState) => state.room.detail.opponent)
   const myUUID = useSelector((state: RootState) => state.room.detail.me)
   const prevMessages = useSelector((state: RootState) => state.room.detail.chatList)
+  const userList = useSelector((state: RootState) => state.user)
+
   const latestMessageDate = flow(
     sortBy('createdAt'),
     last,
@@ -61,19 +67,8 @@ const RoomDetail: React.FC = () => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState<ChatProps[]>([])
 
-  useEffect(() => {
-    dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
-  }, [dispatch, id])
-
-  useEffect(() => {
-    socket.on('chat', (chat: ChatProps) => {
-      console.log(chat)
-
-      setMessages([...messages, chat])
-    })
-  }, [])
-
-  const onClose = useCallback(() => {
+  /* Drawer 핸들링 */
+  const closeDrawer = useCallback(() => {
     setVisible(false)
   }, [])
 
@@ -81,15 +76,53 @@ const RoomDetail: React.FC = () => {
     setVisible(true)
   }, [])
 
+  /* 메시지 작성 */
   const onInput = useCallback(e => {
     setMessage(e.target.value)
   }, [])
 
+  /* 채팅방 초대 */
+  const onRowClick = useCallback((_id) => {
+    if (isEmpty(opponent)) {
+      dispatch({ type: REQUEST_INVITE, payload: { roomId: id, opponent: _id } })
+      closeDrawer()
+    } else {
+      AntMessage.error('1:1 대화만 가능합니다.')
+      closeDrawer()
+    }
+  }, [id, opponent])
+
+  /* 채팅 입력 */
   const onPressEnter = useCallback(() => {
     dispatch({ type: REQUEST_CHAT, payload: { roomId: id, chat: message } })
 
     //TODO:: Input Clear
   }, [message])
+
+  const onMessageEmptyRoom = useCallback(() => {
+    if (isEmpty(opponent)) {
+      AntMessage.info('채팅 상대를 초대해주세요.')
+    }
+  }, [opponent])
+
+  useEffect(() => {
+    dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
+  }, [dispatch, id, visible])
+
+  useEffect(() => {
+    dispatch({ type: FETCH_USER_LIST })
+    onMessageEmptyRoom()
+  }, [])
+
+  useEffect(() => {
+    socket('chat').on('chat', (chat: ChatProps) => {
+      setMessages([...messages, chat])
+    })
+
+    return () => {
+      socket('chat').emit('disconnect', id)
+    }
+  }, [messages])
 
   return (
     <Container>
@@ -103,7 +136,7 @@ const RoomDetail: React.FC = () => {
       }
       <ChatList opponent={ opponent.userName } messageList={ [...prevMessages, ...messages] } emptyImage={ EmptyImage } myUUID={ myUUID } />
       <InputChat onInput={ onInput } onPressEnter={ onPressEnter } />
-      <RoomDetailDrawer onClose={ onClose } userList={ [] } visible={ visible } />
+      <RoomDetailDrawer onClick={ onRowClick } onClose={ closeDrawer } userList={ userList } visible={ visible } />
     </Container>
   )
 }

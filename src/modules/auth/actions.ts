@@ -9,7 +9,7 @@ export const SET_UUID = 'auth/SET_UUID'
 
 /* 액션 생성 함수 */
 export const requestSignIn = createAction(REQUEST_SIGNIN)()
-export const requestSignout = createAction(REQUEST_SIGNOUT)()
-export const setUserName = createAction(SET_USER_NAME)<string>()
+export const requestSignOut = createAction(REQUEST_SIGNOUT)()
+export const setUserName = createAction(SET_USER_NAME)<string | null>()
 export const setIsLogged = createAction(SET_IS_LOGGED)<boolean>()
-export const setUUID = createAction(SET_UUID)<string>()
+export const setUUID = createAction(SET_UUID)<string | null>()

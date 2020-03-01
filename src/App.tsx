@@ -1,19 +1,18 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import { createGlobalStyle, keyframes } from 'styled-components'
 import reset from 'styled-reset'
 
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-
+import { ConnectedRouter, routerMiddleware as connectedReactRouterMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import persistedReducer  from './modules'
+import persistedReducer, { history }  from './modules'
 import rootSaga from './sagas'
 
 import Login from './containers/Login'
@@ -45,7 +44,8 @@ const GlobalStyle = createGlobalStyle`
 
 /* redux-saga config */
 const sagaMiddleware = createSagaMiddleware()
-const enhancer = process.env.NODE_ENV === 'production' ? compose(applyMiddleware(sagaMiddleware)) : composeWithDevTools(applyMiddleware(sagaMiddleware))
+const routerMiddleware = connectedReactRouterMiddleware(history)
+const enhancer = process.env.NODE_ENV === 'production' ? compose(applyMiddleware(sagaMiddleware, routerMiddleware)) : composeWithDevTools(applyMiddleware(sagaMiddleware, routerMiddleware))
 const store = createStore(persistedReducer, enhancer)
 const persistor = persistStore(store)
 
@@ -54,7 +54,7 @@ sagaMiddleware.run(rootSaga)
 const App: React.FC = () => (
   <Provider store={ store }>
     <PersistGate loading={ null } persistor={ persistor }>
-      <Router>
+      <ConnectedRouter history={ history }>
         <Switch>
           <Route exact path="/rooms" component={ Rooms } />
           <Route path="/room/:id" component={ RoomDetail } />
@@ -63,7 +63,7 @@ const App: React.FC = () => (
           <Route path="/setting" component={ Setting } />
         </Switch>
         <GlobalStyle />
-      </Router>
+      </ConnectedRouter>
     </PersistGate>
   </Provider>
 )

@@ -29,7 +29,7 @@ const KakaoTalkLogoWrapper = styled.div`
 `
 
 const KakaoTalkLogo = styled.img`
-  width: 50%;
+  max-width: 160px;
   height: auto;
 `
 

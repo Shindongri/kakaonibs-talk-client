@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Icon, Dropdown, Menu as AntMenu, Button } from 'antd'
+import { Button, Popover } from 'antd'
 import { map } from 'lodash/fp'
 
 const Container = styled.header`
@@ -43,17 +43,15 @@ const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList }) =>
         <span className="text">{ text }</span>
         <span className="number">{ count }</span>
       </div>
-      <Dropdown overlay={
-        <AntMenu>
+      <Popover placement="bottom" trigger="click" content={ (
+        <div>
           {
-            map(({ id, menuName, onClick }) => (
-              <AntMenu.Item key={ id } onClick={ onClick }>{ menuName }</AntMenu.Item>
-            ))(menuList)
+            map(({ id, menuName, onClick }) => (<p key={ id } onClick={ onClick }>{ menuName }</p>))(menuList)
           }
-        </AntMenu>
-      }>
+        </div>
+      ) }>
         <StyledButton icon={ icon } />
-      </Dropdown>
+      </Popover>
     </Container>
   )
 }
