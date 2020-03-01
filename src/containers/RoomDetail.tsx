@@ -100,20 +100,12 @@ const RoomDetail: React.FC = () => {
     //TODO:: Input Clear
   }, [message])
 
-  /* 빈방 일 때, 토스트 팝업 */
-  const onMessageEmptyRoom = useCallback(() => {
-    if (isEmpty(opponent)) {
-      AntMessage.info('채팅 상대를 초대해주세요.')
-    }
-  }, [opponent])
-
   useEffect(() => {
     dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
   }, [dispatch, id, visible])
 
   useEffect(() => {
     dispatch({ type: FETCH_USER_LIST })
-    onMessageEmptyRoom()
   }, [])
 
   useEffect(() => {
