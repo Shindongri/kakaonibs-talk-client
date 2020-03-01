@@ -34,24 +34,29 @@ interface TopHeaderProps {
   count?: number;
   icon?: string;
   menuList?: Menu[];
+  onClick?: () => void;
 }
 
-const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList }) => {
+const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList, onClick }) => {
   return (
     <Container>
       <div>
         <span className="text">{ text }</span>
         <span className="number">{ count }</span>
       </div>
-      <Popover placement="bottom" trigger="click" content={ (
-        <div>
-          {
-            map(({ id, menuName, onClick }) => (<p key={ id } onClick={ onClick }>{ menuName }</p>))(menuList)
-          }
-        </div>
-      ) }>
-        <StyledButton icon={ icon } />
-      </Popover>
+      {
+        menuList && menuList.length ? (
+          <Popover placement="bottom" trigger="click" content={ (
+            <div>
+              {
+                map(({ id, menuName, onClick }) => (<p key={ id } onClick={ onClick }>{ menuName }</p>))(menuList)
+              }
+            </div>
+          ) }>
+            <StyledButton icon={ icon } />
+          </Popover>
+        ) : <StyledButton icon={ icon } onClick={ onClick } />
+      }
     </Container>
   )
 }

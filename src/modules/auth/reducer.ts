@@ -1,6 +1,6 @@
 import { AuthAction, AuthState } from './types'
 import { createReducer } from 'typesafe-actions'
-import storage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage/session'
 import { persistReducer } from 'redux-persist'
 import { SET_IS_LOGGED, SET_USER_NAME, SET_UUID } from './actions'
 

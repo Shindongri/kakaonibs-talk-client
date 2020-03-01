@@ -51,9 +51,9 @@ const requestChat = function* ({ payload }: any) {
   }
 }
 
-const requestChatRoom = function* () {
+const requestChatRoom = function* ({ payload }: any) {
   try {
-    const { status, data: { statusText, detail: { _id } } } = yield call(() => axios.post('/room'))
+    const { status, data: { statusText, detail: { _id } } } = yield call(() => axios.post('/room', { title: payload.title }))
 
     if (status === 200 && statusText === 'OK') {
       yield put(push(`/room/${ _id }`))

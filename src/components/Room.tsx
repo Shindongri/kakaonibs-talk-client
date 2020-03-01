@@ -64,13 +64,13 @@ const Time = styled.small`
 `
 
 
-const Room: React.FC<RoomProps> = ({ _id, imageURL, opponent, updatedAt }) => (
+const Room: React.FC<RoomProps> = ({ _id, title,imageURL, opponent, updatedAt }) => (
   <Row>
     <Link to={ `/room/${ _id }` }>
       <Col>
         <Avatar src={ imageURL || EmptyImage } alt="" />
         <Content>
-          <h3>{ opponent }</h3>
+          <h3>{ title }</h3>
         </Content>
       </Col>
       <Col>

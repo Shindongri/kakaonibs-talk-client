@@ -5,6 +5,7 @@ import { SET_ROOM_LIST, SET_ROOM_DETAIL } from './actions'
 const initialState: RoomState = {
   list: [],
   detail: {
+    title: '',
     me: '',
     opponent: {
       _id: '',

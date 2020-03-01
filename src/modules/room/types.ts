@@ -16,6 +16,7 @@ export type Chat = {
 
 export type Room = {
   _id: string;
+  title: string;
   imageURL?: string;
   opponent: string;
   owner?: string;
@@ -23,6 +24,7 @@ export type Room = {
 }
 
 export type RoomDetail = {
+  title: string | null;
   opponent: UserProps;
   me: string;
   chatList: Chat[];

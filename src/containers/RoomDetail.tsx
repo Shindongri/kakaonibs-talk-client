@@ -55,6 +55,7 @@ const RoomDetail: React.FC = () => {
   const opponent = useSelector((state: RootState) => state.room.detail.opponent)
   const myUUID = useSelector((state: RootState) => state.room.detail.me)
   const prevMessages = useSelector((state: RootState) => state.room.detail.chatList)
+  const title = useSelector((state: RootState) => state.room.detail.title)
   const userList = useSelector((state: RootState) => state.user)
 
   const latestMessageDate = flow(
@@ -99,6 +100,7 @@ const RoomDetail: React.FC = () => {
     //TODO:: Input Clear
   }, [message])
 
+  /* 빈방 일 때, 토스트 팝업 */
   const onMessageEmptyRoom = useCallback(() => {
     if (isEmpty(opponent)) {
       AntMessage.info('채팅 상대를 초대해주세요.')
@@ -120,13 +122,13 @@ const RoomDetail: React.FC = () => {
     })
 
     return () => {
-      socket('chat').emit('disconnect', id)
+      socket('chat').emit('leave', id)
     }
   }, [messages])
 
   return (
     <Container>
-      <RoomDetailHeader name={ opponent.userName } showDrawer={ showDrawer } />
+      <RoomDetailHeader name={ title } showDrawer={ showDrawer } />
       {
         latestMessageDate && (
           <StyledDivider>
