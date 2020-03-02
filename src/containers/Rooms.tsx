@@ -8,7 +8,7 @@ import InputSearch from '../components/InputSearch'
 import Sidebar from '../components/Sidebar'
 import RoomCreateModal from '../components/RoomCreateModal'
 
-import RoomList  from '../components/RoomList'
+import RoomList from '../components/RoomList'
 import Room from '../components/Room'
 
 import useAuth from '../hooks/useAuth'
@@ -43,7 +43,7 @@ const Rooms: React.FC = () => {
     setVisible(false)
   }, [])
 
-  const onInput = useCallback((e) => {
+  const onInput = useCallback(e => {
     setTitle(e.target.value)
   }, [])
 
@@ -64,20 +64,26 @@ const Rooms: React.FC = () => {
     return () => {
       socket('room').emit('disconnect')
     }
-  }, [])
+  }, [rooms])
 
   return (
     <Container>
       <Sidebar />
       <main>
-        <TopHeader text="채팅" icon="plus" onClick={ showModal } />
-        <RoomCreateModal visible={ visible } onInput={ onInput } onCancel={ closeModal } onOk={ onSave } />
+        <TopHeader text="채팅" icon="plus" onClick={showModal} />
+        <RoomCreateModal visible={visible} onInput={onInput} onCancel={closeModal} onOk={onSave} />
         <InputSearch placeholder="채팅방 이름, 참여자 검색" />
         <section>
           <RoomList>
-            {
-              map(({ _id, opponent, updatedAt, title }) => <Room key={ _id } _id={ _id } title={ title } opponent={ getOr('', 'userName')(opponent) } updatedAt={ updatedAt } />)([...prevRoomList, ...rooms])
-            }
+            {map(({ _id, opponent, updatedAt, title }) => (
+              <Room
+                key={_id}
+                _id={_id}
+                title={title}
+                opponent={getOr('', 'userName')(opponent)}
+                updatedAt={updatedAt}
+              />
+            ))([...prevRoomList, ...rooms])}
           </RoomList>
         </section>
       </main>

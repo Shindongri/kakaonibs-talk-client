@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Container = styled.div`
   display: flex;
   align-items: center;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   padding: 5px;
   position: fixed;
   bottom: 0;
@@ -18,19 +18,24 @@ const StyledInput = styled(Input)`
 `
 
 type InputChatProps = {
-  onInput: (e: React.FormEvent<HTMLInputElement>) => void;
-  onPressEnter: () => void;
+  onInput: (e: React.FormEvent<HTMLInputElement>) => void
+  onPressEnter: () => void
 }
 
 const InputChat: React.FC<InputChatProps> = ({ onInput, onPressEnter }) => (
   <Container>
     <Icon type="plus-square" />
-    <StyledInput suffix={
-      <Fragment>
-        <Icon type="smile" />&ensp;
-        <Icon type="number" />
-      </Fragment>
-    } onInput={ onInput } onPressEnter={ onPressEnter } />
+    <StyledInput
+      suffix={
+        <Fragment>
+          <Icon type="smile" />
+          &ensp;
+          <Icon type="number" />
+        </Fragment>
+      }
+      onInput={onInput}
+      onPressEnter={onPressEnter}
+    />
   </Container>
 )
 

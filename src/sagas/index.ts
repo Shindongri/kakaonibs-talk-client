@@ -5,9 +5,5 @@ import room from './room'
 import user from './user'
 
 export default function* rootSaga() {
-  yield all([
-    fork(auth),
-    fork(room),
-    fork(user)
-  ])
+  yield all([fork(auth), fork(room), fork(user)])
 }

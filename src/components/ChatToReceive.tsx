@@ -17,7 +17,7 @@ const Container = styled.div`
   .time {
     font-size: 10px;
     align-self: flex-end;
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     padding-bottom: 5px;
   }
 `
@@ -30,7 +30,7 @@ const Chunk = styled.div`
     font-weight: 600;
     margin-bottom: 3px;
   }
- .text {
+  .text {
     margin-right: 7px;
     border-radius: 4px;
     background-color: #ffffff;
@@ -40,21 +40,21 @@ const Chunk = styled.div`
 `
 
 interface MessageToReceiveProps {
-  _id: string;
-  imageUrl?: string;
-  name: string | null;
-  chat: string;
-  createdAt: Date;
+  _id: string
+  imageUrl?: string
+  name: string | null
+  chat: string
+  createdAt: Date
 }
 
 const ChatToReceive: React.FC<MessageToReceiveProps> = ({ imageUrl, name, chat, createdAt }) => (
   <Container>
-    <img src={ imageUrl || EmptyImage } alt="" />
+    <img src={imageUrl || EmptyImage} alt="" />
     <Chunk>
-      <h3>{ name }</h3>
-      <span className="text">{ chat }</span>
+      <h3>{name}</h3>
+      <span className="text">{chat}</span>
     </Chunk>
-    <span className="time">{ dateConverter(createdAt, 'HH:mm') }</span>
+    <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
   </Container>
 )
 

@@ -25,15 +25,15 @@ const Container = styled.div`
 `
 
 interface MessageToSendProps {
-  _id: string;
-  createdAt: Date;
-  chat: string;
+  _id: string
+  createdAt: Date
+  chat: string
 }
 
 const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat }) => (
   <Container>
-    <span className="time">{ dateConverter(createdAt, 'HH:mm') }</span>
-    <span className="text">{ chat }</span>
+    <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
+    <span className="text">{chat}</span>
   </Container>
 )
 

@@ -39,7 +39,7 @@ const MenuList = styled.ul`
     padding: 18px 8px;
     &:hover {
       background-color: #f2f2f2;
-      opacity: .9;
+      opacity: 0.9;
     }
     &:last-child {
       margin-bottom: 0;
@@ -63,9 +63,9 @@ const Setting: React.FC = () => {
     <Container>
       <Sidebar />
       <main>
-        <TopHeader text='더보기' icon='setting' menuList={ [{ id: 0, menuName: '로그아웃', onClick: logout }] } />
+        <TopHeader text="더보기" icon="setting" menuList={[{ id: 0, menuName: '로그아웃', onClick: logout }]} />
         <KakaoTalkLogoWrapper>
-          <KakaoTalkLogo src={ KakaoTalkLogoImage } alt="" />
+          <KakaoTalkLogo src={KakaoTalkLogoImage} alt="" />
         </KakaoTalkLogoWrapper>
         <MenuList>
           <li>새소식</li>

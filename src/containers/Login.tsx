@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { Input, Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { v4 as uuid } from 'uuid'
 
 import { REQUEST_SIGNIN } from '../modules/auth'
 
@@ -16,7 +15,7 @@ const Container = styled.div`
 
 const Logo = styled.img`
   max-width: 375px;
-  opacity: .9;
+  opacity: 0.9;
   padding: 128px 128px 64px 128px;
   display: flex;
   margin: auto;
@@ -41,15 +40,15 @@ const Login: React.FC = () => {
   }, [])
 
   const login = useCallback(() => {
-    dispatch({ type: REQUEST_SIGNIN, payload: { userName, uuid: uuid() } })
+    dispatch({ type: REQUEST_SIGNIN, payload: { userName } })
   }, [userName, dispatch])
 
   return (
     <Container>
-      <Logo src={ LogoImage } alt="" />
+      <Logo src={LogoImage} alt="" />
       <LoginContainer>
-        <StyledInput placeholder="아이디를 입력해주세요." onInput={ onInput } onPressEnter={ login } />
-        <Button onClick={ login }>로그인</Button>
+        <StyledInput placeholder="아이디를 입력해주세요." onInput={onInput} onPressEnter={login} />
+        <Button onClick={login}>로그인</Button>
       </LoginContainer>
     </Container>
   )

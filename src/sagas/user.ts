@@ -4,9 +4,12 @@ import axios from '../axios'
 import errorHandler from '../utils/errorHandler'
 import { setUserList, FETCH_USER_LIST } from '../modules/user'
 
-const fetchUserList = function* () {
+const fetchUserList = function*() {
   try {
-    const { status, data: { list } } = yield call(() => axios.get('http://localhost:8080/user'))
+    const {
+      status,
+      data: { list },
+    } = yield call(() => axios.get('/user'))
 
     if (status === 200) {
       yield put(setUserList(list))
@@ -17,7 +20,5 @@ const fetchUserList = function* () {
 }
 
 export default function* userSaga() {
-  yield all([
-    takeLatest([FETCH_USER_LIST], fetchUserList),
-  ])
+  yield all([takeLatest([FETCH_USER_LIST], fetchUserList)])
 }

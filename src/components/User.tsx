@@ -8,7 +8,7 @@ const Row = styled.li`
   margin-bottom: 10px;
   &:hover {
     background-color: #f2f2f2;
-    opacity: .9;
+    opacity: 0.9;
   }
   &:last-child {
     margin-bottom: 0;
@@ -35,8 +35,8 @@ const User: React.FC<UserProps> = ({ _id, imageURL, userName }) => {
   return (
     <Row>
       <Col>
-        <img className="avatar" src={ imageURL || EmptyImage } alt="" />
-        <span className="name">{ userName }</span>
+        <img className="avatar" src={imageURL || EmptyImage} alt="" />
+        <span className="name">{userName}</span>
       </Col>
     </Row>
   )

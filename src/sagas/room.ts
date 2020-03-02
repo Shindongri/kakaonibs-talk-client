@@ -10,12 +10,16 @@ import {
   REQUEST_CHAT,
   setRoomList,
   setRoomDetail,
-  REQUEST_CHAT_ROOM, REQUEST_INVITE
+  REQUEST_CHAT_ROOM,
+  REQUEST_INVITE,
 } from '../modules/room'
 
-const fetchRoomList = function* () {
+const fetchRoomList = function*() {
   try {
-    const { status, data: { statusText, list } } = yield call(() => axios.get('/room'))
+    const {
+      status,
+      data: { statusText, list },
+    } = yield call(() => axios.get('/room'))
 
     if (status === 200 && statusText === 'OK') {
       yield put(setRoomList(list))
@@ -25,9 +29,12 @@ const fetchRoomList = function* () {
   }
 }
 
-const fetchRoomDetail = function* ({ payload }: any) {
+const fetchRoomDetail = function*({ payload }: any) {
   try {
-    const { status, data: { statusText, detail } } = yield call(() => axios.get(`/room/${ payload }`))
+    const {
+      status,
+      data: { statusText, detail },
+    } = yield call(() => axios.get(`/room/${payload}`))
 
     if (status === 200 && statusText === 'OK') {
       yield put(setRoomDetail(detail))
@@ -37,9 +44,12 @@ const fetchRoomDetail = function* ({ payload }: any) {
   }
 }
 
-const requestChat = function* ({ payload }: any) {
+const requestChat = function*({ payload }: any) {
   try {
-    const { status, data: { statusText } } = yield call(() => axios.post(`/room/${ payload.roomId }/chat`, { chat: payload.chat }))
+    const {
+      status,
+      data: { statusText },
+    } = yield call(() => axios.post(`/room/${payload.roomId}/chat`, { chat: payload.chat }))
 
     if (status === 200 && statusText === 'OK') {
       console.log('OK')
@@ -51,12 +61,18 @@ const requestChat = function* ({ payload }: any) {
   }
 }
 
-const requestChatRoom = function* ({ payload }: any) {
+const requestChatRoom = function*({ payload }: any) {
   try {
-    const { status, data: { statusText, detail: { _id } } } = yield call(() => axios.post('/room', { title: payload.title }))
+    const {
+      status,
+      data: {
+        statusText,
+        detail: { _id },
+      },
+    } = yield call(() => axios.post('/room', { title: payload.title }))
 
     if (status === 200 && statusText === 'OK') {
-      yield put(push(`/room/${ _id }`))
+      yield put(push(`/room/${_id}`))
     } else {
       console.error('FAIL')
     }
@@ -65,9 +81,12 @@ const requestChatRoom = function* ({ payload }: any) {
   }
 }
 
-const requestInvite = function* ({ payload }: any) {
+const requestInvite = function*({ payload }: any) {
   try {
-    const { status, data: { statusText } } = yield call(() => axios.post(`/room/${ payload.roomId }/invite`, { opponent: payload.opponent }))
+    const {
+      status,
+      data: { statusText },
+    } = yield call(() => axios.post(`/room/${payload.roomId}/invite`, { opponent: payload.opponent }))
 
     if (status === 200 && statusText === 'OK') {
     } else {
@@ -84,6 +103,6 @@ export default function* roomSaga() {
     takeLatest([REQUEST_CHAT_ROOM], requestChatRoom),
     takeLatest([REQUEST_CHAT], requestChat),
     takeLatest([FETCH_ROOM_LIST], fetchRoomList),
-    takeLatest([FETCH_ROOM_DETAIL], fetchRoomDetail)
+    takeLatest([FETCH_ROOM_DETAIL], fetchRoomDetail),
   ])
 }

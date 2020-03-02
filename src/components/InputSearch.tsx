@@ -7,12 +7,12 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   border-radius: 4px;
 `
 
 const StyledIcon = styled(Icon)`
-  color: #A7A7A7;
+  color: #a7a7a7;
   padding: 16px;
 `
 
@@ -22,14 +22,14 @@ const StyledInput = styled(Input)`
 `
 
 type InputSearch = {
-  placeholder?: string;
+  placeholder?: string
 }
 
 const InputSearch: React.FC<InputSearch> = ({ placeholder }) => {
   return (
     <Container>
       <StyledIcon type="search" />
-      <StyledInput placeholder={ placeholder } />
+      <StyledInput placeholder={placeholder} />
     </Container>
   )
 }

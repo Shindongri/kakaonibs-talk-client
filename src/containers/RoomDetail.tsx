@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Divider, message as AntMessage } from 'antd'
+import { Divider } from 'antd'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,7 +25,7 @@ import { Chat as ChatProps } from '../modules/room'
 import { dateConverter } from '../utils/date'
 
 const Container = styled.main`
-  background-color: #A0C0D7;
+  background-color: #a0c0d7;
   height: 100vh;
   overflow: auto;
   margin-bottom: 42px;
@@ -33,18 +33,17 @@ const Container = styled.main`
 
 const StyledDivider = styled(Divider)`
   &::before {
-    border-top: .4px solid rgba(0,0,0,0.3) !important;
+    border-top: 0.4px solid rgba(0, 0, 0, 0.3) !important;
   }
   &::after {
-    border-top: .4px solid rgba(0,0,0,0.3) !important;
+    border-top: 0.4px solid rgba(0, 0, 0, 0.3) !important;
   }
 `
 
 const DateDivider = styled.small`
   font-size: 12px;
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
 `
-
 
 const RoomDetail: React.FC = () => {
   useAuth()
@@ -58,11 +57,7 @@ const RoomDetail: React.FC = () => {
   const title = useSelector((state: RootState) => state.room.detail.title)
   const userList = useSelector((state: RootState) => state.user)
 
-  const latestMessageDate = flow(
-    sortBy('createdAt'),
-    last,
-    getOr('', 'createdAt')
-  )(prevMessages)
+  const latestMessageDate = flow(sortBy('createdAt'), last, getOr('', 'createdAt'))(prevMessages)
 
   const [visible, setVisible] = useState(false)
   const [message, setMessage] = useState('')
@@ -83,22 +78,20 @@ const RoomDetail: React.FC = () => {
   }, [])
 
   /* 채팅방 초대 */
-  const onRowClick = useCallback((_id) => {
-    if (isEmpty(opponent)) {
-      dispatch({ type: REQUEST_INVITE, payload: { roomId: id, opponent: _id } })
-      closeDrawer()
-    } else {
-      AntMessage.error('1:1 대화만 가능합니다.')
-      closeDrawer()
-    }
-  }, [id, opponent])
+  const onRowClick = useCallback(
+    _id => {
+      if (isEmpty(opponent)) {
+        dispatch({ type: REQUEST_INVITE, payload: { roomId: id, opponent: _id } })
+        closeDrawer()
+      }
+    },
+    [id, opponent, closeDrawer, dispatch],
+  )
 
   /* 채팅 입력 */
   const onPressEnter = useCallback(() => {
     dispatch({ type: REQUEST_CHAT, payload: { roomId: id, chat: message } })
-
-    //TODO:: Input Clear
-  }, [message])
+  }, [message, dispatch, id])
 
   useEffect(() => {
     dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
@@ -106,31 +99,36 @@ const RoomDetail: React.FC = () => {
 
   useEffect(() => {
     dispatch({ type: FETCH_USER_LIST })
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     socket('chat').on('chat', (chat: ChatProps) => {
+      console.log('new chat : ', chat)
+
       setMessages([...messages, chat])
     })
 
     return () => {
-      socket('chat').emit('leave', id)
+      socket('chat').emit('leave')
     }
-  }, [messages])
+  }, [messages, id])
 
   return (
     <Container>
-      <RoomDetailHeader name={ title } showDrawer={ showDrawer } />
-      {
-        latestMessageDate && (
-          <StyledDivider>
-            <DateDivider>{ dateConverter(latestMessageDate, 'yyyy년 MM월 dd일') }</DateDivider>
-          </StyledDivider>
-        )
-      }
-      <ChatList opponent={ opponent.userName } messageList={ [...prevMessages, ...messages] } emptyImage={ EmptyImage } myUUID={ myUUID } />
-      <InputChat onInput={ onInput } onPressEnter={ onPressEnter } />
-      <RoomDetailDrawer onClick={ onRowClick } onClose={ closeDrawer } userList={ userList } visible={ visible } />
+      <RoomDetailHeader name={title} showDrawer={showDrawer} />
+      {latestMessageDate && (
+        <StyledDivider>
+          <DateDivider>{dateConverter(latestMessageDate, 'yyyy년 MM월 dd일')}</DateDivider>
+        </StyledDivider>
+      )}
+      <ChatList
+        opponent={opponent.userName}
+        messageList={[...prevMessages, ...messages]}
+        emptyImage={EmptyImage}
+        myUUID={myUUID}
+      />
+      <InputChat onInput={onInput} onPressEnter={onPressEnter} />
+      <RoomDetailDrawer onClick={onRowClick} onClose={closeDrawer} userList={userList} visible={visible} />
     </Container>
   )
 }

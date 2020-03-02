@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom'
 const Row = styled.li`
   position: relative;
   padding: 4px;
-  border-bottom: 1px solid #F7F7F7;
+  border-bottom: 1px solid #f7f7f7;
   margin-bottom: 10px;
   &:hover {
     background-color: #f2f2f2;
-    opacity: .9;
+    opacity: 0.9;
   }
   &:last-child {
     margin-bottom: 0;
@@ -63,18 +63,17 @@ const Time = styled.small`
   font-size: 0.5rem;
 `
 
-
-const Room: React.FC<RoomProps> = ({ _id, title,imageURL, opponent, updatedAt }) => (
+const Room: React.FC<RoomProps> = ({ _id, title, imageURL, opponent, updatedAt }) => (
   <Row>
-    <Link to={ `/room/${ _id }` }>
+    <Link to={`/room/${_id}`}>
       <Col>
-        <Avatar src={ imageURL || EmptyImage } alt="" />
+        <Avatar src={imageURL || EmptyImage} alt="" />
         <Content>
-          <h3>{ title }</h3>
+          <h3>{title}</h3>
         </Content>
       </Col>
       <Col>
-        <Time>{ format(new Date(updatedAt), 'HH:mm') }</Time>
+        <Time>{format(new Date(updatedAt), 'HH:mm')}</Time>
       </Col>
     </Link>
   </Row>

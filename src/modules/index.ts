@@ -12,9 +12,8 @@ const rootReducer = combineReducers({
   router: connectRouter(history),
   auth,
   user,
-  room
+  room,
 })
-
 
 export default rootReducer
 

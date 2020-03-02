@@ -19,7 +19,7 @@ const initialState: AuthState = {
 const auth = createReducer<AuthState, AuthAction>(initialState, {
   [SET_USER_NAME]: (state, action) => ({ ...state, userName: action.payload }),
   [SET_IS_LOGGED]: (state, action) => ({ ...state, isLogged: action.payload }),
-  [SET_UUID]: (state, action) => ({ ...state, uuid: action.payload })
+  [SET_UUID]: (state, action) => ({ ...state, uuid: action.payload }),
 })
 
 export default persistReducer(persistConfig, auth)

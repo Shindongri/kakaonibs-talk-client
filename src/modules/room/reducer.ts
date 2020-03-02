@@ -9,15 +9,15 @@ const initialState: RoomState = {
     me: '',
     opponent: {
       _id: '',
-      userName: ''
+      userName: '',
     },
-    chatList: []
-  }
+    chatList: [],
+  },
 }
 
 const room = createReducer<RoomState, RoomAction>(initialState, {
   [SET_ROOM_LIST]: (state, action) => ({ ...state, list: action.payload }),
-  [SET_ROOM_DETAIL]: (state, action) => ({ ...state, detail: action.payload })
+  [SET_ROOM_DETAIL]: (state, action) => ({ ...state, detail: action.payload }),
 })
 
 export default room
