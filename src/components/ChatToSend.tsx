@@ -9,31 +9,41 @@ const Container = styled.div`
   .time {
     font-size: 10px;
     align-self: flex-end;
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     padding-bottom: 5px;
   }
   .text {
     max-width: 50%;
     margin-left: 7px;
     border-radius: 4px;
-    background-color: #FFE934;
+    background-color: #ffe934;
     padding: 10px 5px;
     font-size: 14px;
     over-flow: hidden;
-    text-alli
+  }
+  .image {
+    max-width: 50%;
+    margin-left: 7px;
+    border-radius: 4px;
+    padding: 10px 5px;
   }
 `
 
 interface MessageToSendProps {
   _id: string
   createdAt: Date
-  chat: string
+  chat?: string
+  image?: string
 }
 
-const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat }) => (
+const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat, image }) => (
   <Container>
     <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
-    <span className="text">{chat}</span>
+    {image ? (
+      <img className="image" src={`${process.env.REACT_APP_API_HOST}/image/${image}`} alt="" />
+    ) : (
+      <span className="text">{chat}</span>
+    )}
   </Container>
 )
 

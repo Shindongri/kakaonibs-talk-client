@@ -10,7 +10,7 @@ export type Chat = {
   room: string
   user: string
   chat: string | null
-  imageURL: string | null
+  image: string | null
   createdAt: Date
 }
 

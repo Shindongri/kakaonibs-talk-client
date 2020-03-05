@@ -1,7 +1,7 @@
+import { keys, forEach, flow } from 'lodash'
 import { call, put, all, takeLatest } from 'redux-saga/effects'
-
-import axios from '../axios'
 import { push } from 'connected-react-router'
+import axios from '../axios'
 
 import errorHandler from '../utils/errorHandler'
 import {
@@ -12,6 +12,7 @@ import {
   setRoomDetail,
   REQUEST_CHAT_ROOM,
   REQUEST_INVITE,
+  REQUEST_IMAGE,
 } from '../modules/room'
 
 const fetchRoomList = function*() {
@@ -61,6 +62,28 @@ const requestChat = function*({ payload }: any) {
   }
 }
 
+const requestImage = function*({ payload }: any) {
+  const image = payload.image
+
+  let formData = new FormData()
+  formData.append('image', image)
+
+  try {
+    const {
+      status,
+      data: { statusText },
+    } = yield call(() => axios.post(`/room/${payload.roomId}/image`, formData))
+
+    if (status === 200 && statusText === 'OK') {
+      console.log('OK')
+    } else {
+      console.error('FAIL')
+    }
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
 const requestChatRoom = function*({ payload }: any) {
   try {
     const {
@@ -99,6 +122,7 @@ const requestInvite = function*({ payload }: any) {
 
 export default function* roomSaga() {
   yield all([
+    takeLatest([REQUEST_IMAGE], requestImage),
     takeLatest([REQUEST_INVITE], requestInvite),
     takeLatest([REQUEST_CHAT_ROOM], requestChatRoom),
     takeLatest([REQUEST_CHAT], requestChat),
