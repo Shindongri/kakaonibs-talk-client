@@ -13,13 +13,22 @@ type ChatListProps = {
 }
 
 const ChatList: React.FC<ChatListProps> = ({ opponent, messageList, myUUID, emptyImage }) => {
+  console.log(messageList)
   return (
     <Fragment>
-      {map(({ _id, chat, createdAt, user }) =>
+      {map(({ _id, chat, createdAt, user, image }) =>
         myUUID === user ? (
-          <ChatToSend key={_id} _id={_id} chat={chat} createdAt={createdAt} />
+          <ChatToSend key={_id} _id={_id} chat={chat} image={image} createdAt={createdAt} />
         ) : (
-          <ChatToReceive key={_id} _id={_id} imageUrl={emptyImage} name={opponent} chat={chat} createdAt={createdAt} />
+          <ChatToReceive
+            key={_id}
+            _id={_id}
+            thumbnailImage={emptyImage}
+            image={image}
+            name={opponent}
+            chat={chat}
+            createdAt={createdAt}
+          />
         ),
       )(messageList)}
     </Fragment>

@@ -1,23 +1,22 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Divider } from 'antd'
 import styled from 'styled-components'
+
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { sortBy, last, flow, getOr, isEmpty } from 'lodash/fp'
-
-import socket from '../socket'
 
 import EmptyImage from '../assets/images/kakao-friends.png'
 import InputChat from '../components/InputChat'
 
 import RoomDetailHeader from '../components/RoomDetailHeader'
 import RoomDetailDrawer from '../components/RoomDetailDrawer'
-
 import ChatList from '../components/ChatList'
 
+import useSocket from '../hooks/useSocket'
 import useAuth from '../hooks/useAuth'
 
-import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_INVITE } from '../modules/room'
+import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_IMAGE, REQUEST_INVITE } from '../modules/room'
 import { FETCH_USER_LIST } from '../modules/user'
 
 import { RootState } from '../modules'
@@ -72,6 +71,10 @@ const RoomDetail: React.FC = () => {
     setVisible(true)
   }, [])
 
+  const onUpload = useCallback(file => {
+    dispatch({ type: REQUEST_IMAGE, payload: { image: file, roomId: id } })
+  }, [])
+
   /* 메시지 작성 */
   const onInput = useCallback(e => {
     setMessage(e.target.value)
@@ -88,30 +91,31 @@ const RoomDetail: React.FC = () => {
     [id, opponent, closeDrawer, dispatch],
   )
 
+  const fetchRoomDetail = useCallback(id => {
+    dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
+  }, [])
+
+  const fetchUserList = useCallback(() => {
+    dispatch({ type: FETCH_USER_LIST })
+  }, [])
+
   /* 채팅 입력 */
   const onPressEnter = useCallback(() => {
     dispatch({ type: REQUEST_CHAT, payload: { roomId: id, chat: message } })
   }, [message, dispatch, id])
 
   useEffect(() => {
-    dispatch({ type: FETCH_ROOM_DETAIL, payload: id })
-  }, [dispatch, id, visible])
-
-  useEffect(() => {
-    dispatch({ type: FETCH_USER_LIST })
+    fetchUserList()
+    fetchRoomDetail(id)
   }, [dispatch])
 
-  useEffect(() => {
-    socket('chat').on('chat', (chat: ChatProps) => {
-      console.log('new chat : ', chat)
-
-      setMessages([...messages, chat])
-    })
-
-    return () => {
-      socket('chat').emit('leave')
-    }
-  }, [messages, id])
+  useSocket({
+    to: 'chat',
+    event: 'chat',
+    callBack: (chat: ChatProps) => setMessages([...messages, chat]),
+    cleanUp: () => {},
+    deps: [messages],
+  })
 
   return (
     <Container>
@@ -127,7 +131,7 @@ const RoomDetail: React.FC = () => {
         emptyImage={EmptyImage}
         myUUID={myUUID}
       />
-      <InputChat onInput={onInput} onPressEnter={onPressEnter} />
+      <InputChat onUpload={onUpload} onInput={onInput} onPressEnter={onPressEnter} />
       <RoomDetailDrawer onClick={onRowClick} onClose={closeDrawer} userList={userList} visible={visible} />
     </Container>
   )
