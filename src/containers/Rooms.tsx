@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
 import { TopHeader, InputSearch, Sidebar, RoomCreateModal, RoomList, Room } from '../components'
-import { useAuth } from '../hooks'
+import { useAuth, useBoolean, useSocket, useInput, useRooms, useRequest } from '../hooks'
 
 import { FETCH_ROOM_LIST, REQUEST_CHAT_ROOM, Room as RoomProps } from '../modules/room'
 import { RootState } from '../modules'
-import socket from '../socket'
 
 const Container = styled.div`
   nav {
@@ -20,51 +19,38 @@ const Container = styled.div`
 `
 
 const Rooms: React.FC = () => {
+  useAuth()
   const dispatch = useDispatch()
-
-  const [visible, setVisible] = useState(false)
-  const [title, setTitle] = useState(null)
-  const [rooms, setRooms] = useState<RoomProps[]>([])
 
   const prevRoomList = useSelector((state: RootState) => state.room.list)
 
-  const showModal = useCallback(() => {
-    setVisible(true)
-  }, [])
+  const [rooms, setRooms] = useRooms([])
+  const [visible, showModal, closeModal] = useBoolean(false)
+  const [title, setTitle] = useInput(null)
+  const [onNewRoom, , offNewRoom] = useSocket({
+    to: 'room',
+    event: 'newRoom',
+    cb: (newRoom: RoomProps) => setRooms(newRoom),
+  })
 
-  const closeModal = useCallback(() => {
-    setVisible(false)
-  }, [])
-
-  const onInput = useCallback(e => {
-    setTitle(e.target.value)
-  }, [])
-
-  const onSave = useCallback(() => {
-    dispatch({ type: REQUEST_CHAT_ROOM, payload: { title } })
-  }, [dispatch, title])
-
-  useAuth()
-  useEffect(() => {
-    dispatch({ type: FETCH_ROOM_LIST })
-  }, [dispatch])
+  const onSave = useRequest({ type: REQUEST_CHAT_ROOM, payload: { title } })
+  const fetchRoomList = useRequest({ type: FETCH_ROOM_LIST })
 
   useEffect(() => {
-    socket('room').on('newRoom', (newRoom: RoomProps) => {
-      setRooms([...rooms, newRoom])
-    })
+    fetchRoomList()
+    onNewRoom()
 
     return () => {
-      socket('room').emit('disconnect')
+      offNewRoom()
     }
-  }, [rooms])
+  }, [dispatch, rooms, fetchRoomList, onNewRoom, offNewRoom])
 
   return (
     <Container>
       <Sidebar />
       <main>
         <TopHeader text="채팅" icon="plus" onClick={showModal} />
-        <RoomCreateModal visible={visible} onInput={onInput} onCancel={closeModal} onOk={onSave} />
+        <RoomCreateModal visible={visible} onInput={setTitle} onCancel={closeModal} onOk={onSave} />
         <InputSearch placeholder="채팅방 이름, 참여자 검색" />
         <section>
           <RoomList>

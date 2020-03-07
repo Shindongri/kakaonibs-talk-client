@@ -9,7 +9,7 @@ import { sortBy, last, flow, getOr } from 'lodash/fp'
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 import { InputChat, RoomDetailHeader, RoomDetailDrawer, ChatList } from '../components'
-import { useSocket, useAuth, useDrawer, useInput, useMessages, useRequest } from '../hooks'
+import { useSocket, useAuth, useBoolean, useInput, useMessages, useRequest } from '../hooks'
 
 import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_IMAGE } from '../modules/room'
 
@@ -50,12 +50,15 @@ const RoomDetail: React.FC = () => {
 
   const [message, setMessage] = useInput(null)
   const [messages, setMessages] = useMessages([])
-  const [visible, showDrawer, closeDrawer] = useDrawer(false)
-  const [onChat] = useSocket({ to: 'chat', event: 'chat', cb: chat => setMessages(chat) })
+  const [visible, showDrawer, closeDrawer] = useBoolean(false)
+  const [onChat, , offChat] = useSocket({ to: 'chat', event: 'chat', cb: chat => setMessages(chat) })
 
-  const onUpload = useCallback(file => {
-    dispatch({ type: REQUEST_IMAGE, payload: { image: file, roomId: id } })
-  }, [])
+  const onUpload = useCallback(
+    file => {
+      dispatch({ type: REQUEST_IMAGE, payload: { image: file, roomId: id } })
+    },
+    [dispatch, id],
+  )
 
   /* TODO:: 채팅방 초대 */
   const onRowClick = useCallback(_id => {}, [])
@@ -69,7 +72,10 @@ const RoomDetail: React.FC = () => {
     fetchRoomDetail()
 
     onChat()
-  }, [dispatch, id, fetchRoomDetail])
+    return () => {
+      offChat()
+    }
+  }, [dispatch, id, fetchRoomDetail, onChat, offChat])
 
   return (
     <Container>

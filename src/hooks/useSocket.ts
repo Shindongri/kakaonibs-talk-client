@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import socket from '../socket'
 
 type SocketProps = {
@@ -11,7 +10,7 @@ type SocketProps = {
 export const useSocket = ({ to, event, cb, data }: SocketProps) => {
   const on = () => socket(to).on(event, cb ? cb : () => {})
   const emit = () => socket(to).emit(event, data)
-  const disconnect = () => {}
+  const disconnect = () => socket(to).emit('disconnect')
 
   return [on, emit, disconnect] as [typeof on, typeof emit, typeof disconnect]
 }

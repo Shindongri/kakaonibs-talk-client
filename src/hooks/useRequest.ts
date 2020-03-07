@@ -6,5 +6,5 @@ export const useRequest = ({ type, payload }: { type: string; payload?: any }) =
 
   return useCallback(() => {
     dispatch({ type, payload })
-  }, [dispatch])
+  }, [dispatch, type, payload])
 }
