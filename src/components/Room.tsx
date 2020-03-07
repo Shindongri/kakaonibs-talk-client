@@ -63,7 +63,7 @@ const Time = styled.small`
   font-size: 0.5rem;
 `
 
-const Room: React.FC<RoomProps> = ({ _id, title, imageURL, opponent, updatedAt }) => (
+export const Room: React.FC<RoomProps> = ({ _id, title, imageURL, updatedAt }) => (
   <Row>
     <Link to={`/room/${_id}`}>
       <Col>
@@ -78,5 +78,3 @@ const Room: React.FC<RoomProps> = ({ _id, title, imageURL, opponent, updatedAt }
     </Link>
   </Row>
 )
-
-export default Room

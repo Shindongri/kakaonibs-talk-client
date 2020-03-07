@@ -4,9 +4,8 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { REQUEST_SIGNOUT } from '../modules/auth'
-import TopHeader from '../components/TopHeader'
-import Sidebar from '../components/Sidebar'
-import useAuth from '../hooks/useAuth'
+import { TopHeader, Sidebar } from '../components'
+import { useAuth } from '../hooks'
 
 import KakaoTalkLogoImage from '../assets/images/kakao-talk.png'
 

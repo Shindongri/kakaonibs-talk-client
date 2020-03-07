@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 
 import { RootState } from '../modules'
 
-const useAuth = () => {
+export const useAuth = () => {
   const location = useLocation()
   const history = useHistory()
 
@@ -16,5 +16,3 @@ const useAuth = () => {
     }
   }, [location.pathname, history, isLogged])
 }
-
-export default useAuth

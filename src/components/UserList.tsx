@@ -7,6 +7,4 @@ const Rows = styled.ul`
   padding: 7px 0;
 `
 
-const UserList: React.FC = ({ children }) => <Rows>{children}</Rows>
-
-export default UserList
+export const UserList: React.FC = ({ children }) => <Rows>{children}</Rows>

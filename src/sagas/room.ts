@@ -1,4 +1,3 @@
-import { keys, forEach, flow } from 'lodash'
 import { call, put, all, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 import axios from '../axios'
@@ -104,12 +103,13 @@ const requestChatRoom = function*({ payload }: any) {
   }
 }
 
+//TODO::
 const requestInvite = function*({ payload }: any) {
   try {
     const {
       status,
       data: { statusText },
-    } = yield call(() => axios.post(`/room/${payload.roomId}/invite`, { opponent: payload.opponent }))
+    } = yield call(() => axios.post(`/room/${payload.roomId}/invite`, {}))
 
     if (status === 200 && statusText === 'OK') {
     } else {

@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Input, Button } from 'antd'
-import { useDispatch } from 'react-redux'
 
-import { REQUEST_SIGNIN } from '../modules/auth'
+import { useInput, useLogin } from '../hooks'
 
 import LogoImage from '../assets/images/kakao-talk-color.svg'
 
@@ -32,23 +31,15 @@ const StyledInput = styled(Input)`
 `
 
 const Login: React.FC = () => {
-  const [userName, setUserName] = useState(null)
-  const dispatch = useDispatch()
-
-  const onInput = useCallback(e => {
-    setUserName(e.target.value)
-  }, [])
-
-  const login = useCallback(() => {
-    dispatch({ type: REQUEST_SIGNIN, payload: { userName } })
-  }, [userName, dispatch])
+  const [userName, setUserName] = useInput(null)
+  const handleLogin = useLogin(userName)
 
   return (
     <Container>
       <Logo src={LogoImage} alt="" />
       <LoginContainer>
-        <StyledInput placeholder="아이디를 입력해주세요." onInput={onInput} onPressEnter={login} />
-        <Button onClick={login}>로그인</Button>
+        <StyledInput placeholder="아이디를 입력해주세요." onInput={setUserName} onPressEnter={handleLogin} />
+        <Button onClick={handleLogin}>로그인</Button>
       </LoginContainer>
     </Container>
   )

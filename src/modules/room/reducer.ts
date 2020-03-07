@@ -7,10 +7,6 @@ const initialState: RoomState = {
   detail: {
     title: '',
     me: '',
-    opponent: {
-      _id: '',
-      userName: '',
-    },
     chatList: [],
   },
 }

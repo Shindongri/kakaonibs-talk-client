@@ -6,13 +6,8 @@ import styled from 'styled-components'
 import { RootState } from '../modules'
 import { FETCH_USER_LIST, User as UserProps } from '../modules/user'
 
-import TopHeader from '../components/TopHeader'
-import InputSearch from '../components/InputSearch'
-import User from '../components/User'
-import UserList from '../components/UserList'
-import Sidebar from '../components/Sidebar'
-
-import useAuth from '../hooks/useAuth'
+import { TopHeader, InputSearch, User, UserList, Sidebar } from '../components'
+import { useAuth } from '../hooks'
 
 const Container = styled.div`
   nav {

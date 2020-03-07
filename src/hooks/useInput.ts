@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
-const useInput = (defaultValue: string) => {
+export const useInput = (defaultValue: string | null) => {
   const [input, setInput] = useState(defaultValue)
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = useCallback(e => {
     setInput(e.target.value)
   }, [])
 
@@ -10,5 +10,3 @@ const useInput = (defaultValue: string) => {
 
   return [input, onChange, onReset] as [string, typeof onChange, typeof onReset]
 }
-
-export default useInput
