@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
@@ -7,7 +8,7 @@ import { RootState } from '../modules'
 import { FETCH_USER_LIST, User as UserProps } from '../modules/user'
 
 import { TopHeader, InputSearch, User, UserList, Sidebar } from '../components'
-import { useAuth } from '../hooks'
+import { useAuth, useSocketRegister } from '../hooks'
 
 const Container = styled.div`
   nav {
@@ -33,11 +34,17 @@ const HeaderTitle = styled.h6`
 
 const Users: React.FC = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   useAuth()
   useEffect(() => {
     dispatch({ type: FETCH_USER_LIST })
   }, [dispatch])
+  useSocketRegister({
+    to: 'room',
+    event: 'invite',
+    cb: (roomId: string) => history.push(`/room/${roomId}`),
+  })
 
   const userName = useSelector((state: RootState) => state.auth.userName)
   const userList = useSelector((state: RootState) => state.user)
@@ -46,7 +53,7 @@ const Users: React.FC = () => {
     <Container>
       <Sidebar />
       <main>
-        <TopHeader text="친구" count={userList.length} icon="user-add" />
+        <TopHeader text="친구" count={userList.length} />
         <InputSearch placeholder="이름으로 검색" />
         <StyledSection>
           <header>

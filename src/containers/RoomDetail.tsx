@@ -9,9 +9,10 @@ import { sortBy, last, flow, getOr } from 'lodash/fp'
 import EmptyImage from '../assets/images/kakao-friends.png'
 
 import { InputChat, RoomDetailHeader, RoomDetailDrawer, ChatList } from '../components'
-import { useSocket, useAuth, useBoolean, useInput, useMessages, useRequest } from '../hooks'
+import { useSocketRegister, useAuth, useBoolean, useInput, useMessages, useRequest } from '../hooks'
 
-import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_IMAGE } from '../modules/room'
+import { FETCH_ROOM_DETAIL, REQUEST_CHAT, REQUEST_IMAGE, REQUEST_INVITE } from '../modules/room'
+import { FETCH_USER_LIST } from '../modules/user'
 
 import { RootState } from '../modules'
 import { Chat } from '../modules/room'
@@ -42,6 +43,7 @@ const getLatestMessageDate = (chatList: Chat[]) => flow(sortBy('createdAt'), las
 
 const RoomDetail: React.FC = () => {
   useAuth()
+  useSocketRegister({ to: 'chat', event: 'chat', cb: chat => setMessages(chat) })
 
   const dispatch = useDispatch()
   const { id } = useParams()
@@ -51,7 +53,6 @@ const RoomDetail: React.FC = () => {
   const [message, setMessage] = useInput(null)
   const [messages, setMessages] = useMessages([])
   const [visible, showDrawer, closeDrawer] = useBoolean(false)
-  const [onChat, , offChat] = useSocket({ to: 'chat', event: 'chat', cb: chat => setMessages(chat) })
 
   const onUpload = useCallback(
     file => {
@@ -60,22 +61,18 @@ const RoomDetail: React.FC = () => {
     [dispatch, id],
   )
 
-  /* TODO:: 채팅방 초대 */
-  const onRowClick = useCallback(_id => {}, [])
+  const onRowClick = useRequest({ type: REQUEST_INVITE, payload: { roomId: id } })
 
   const fetchRoomDetail = useRequest({ type: FETCH_ROOM_DETAIL, payload: id })
+  const fetchUserList = useRequest({ type: FETCH_USER_LIST })
   const onPressEnter = useRequest({ type: REQUEST_CHAT, payload: { roomId: id, chat: message } })
 
   const latestDate = getLatestMessageDate(chatList)
 
   useEffect(() => {
     fetchRoomDetail()
-
-    onChat()
-    return () => {
-      offChat()
-    }
-  }, [dispatch, id, fetchRoomDetail, onChat, offChat])
+    fetchUserList()
+  }, [dispatch, id, fetchRoomDetail, fetchUserList])
 
   return (
     <Container>

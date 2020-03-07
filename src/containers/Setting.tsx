@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { REQUEST_SIGNOUT } from '../modules/auth'
 import { TopHeader, Sidebar } from '../components'
-import { useAuth } from '../hooks'
+import { useAuth, useSocketRegister } from '../hooks'
 
 import KakaoTalkLogoImage from '../assets/images/kakao-talk.png'
 
@@ -47,10 +47,15 @@ const MenuList = styled.ul`
 `
 
 const Setting: React.FC = () => {
-  useAuth()
-
   const history = useHistory()
   const dispatch = useDispatch()
+
+  useAuth()
+  useSocketRegister({
+    to: 'room',
+    event: 'invite',
+    cb: (roomId: string) => history.push(`/room/${roomId}`),
+  })
 
   const logout = useCallback(() => {
     dispatch({ type: REQUEST_SIGNOUT })

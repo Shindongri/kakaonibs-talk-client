@@ -44,7 +44,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuLis
         <span className="text">{text}</span>
         <span className="number">{count}</span>
       </div>
-      {menuList && menuList.length ? (
+      {menuList && menuList.length && (
         <Popover
           placement="bottom"
           trigger="click"
@@ -57,11 +57,10 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuLis
               ))(menuList)}
             </div>
           }>
-          <StyledButton icon={icon} />
+          {icon && <StyledButton icon={icon} onClick={onClick} />}
         </Popover>
-      ) : (
-        <StyledButton icon={icon} onClick={onClick} />
       )}
+      {onClick && icon && <StyledButton icon={icon} onClick={onClick} />}
     </Container>
   )
 }

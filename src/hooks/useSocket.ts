@@ -1,6 +1,6 @@
 import socket from '../socket'
 
-type SocketProps = {
+export type SocketProps = {
   to: string
   event: string
   data?: any

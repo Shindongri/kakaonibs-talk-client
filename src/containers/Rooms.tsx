@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
 import { TopHeader, InputSearch, Sidebar, RoomCreateModal, RoomList, Room } from '../components'
-import { useAuth, useBoolean, useSocket, useInput, useRooms, useRequest } from '../hooks'
+import { useAuth, useBoolean, useSocketRegister, useInput, useRooms, useRequest, useModal } from '../hooks'
 
 import { FETCH_ROOM_LIST, REQUEST_CHAT_ROOM, Room as RoomProps } from '../modules/room'
 import { RootState } from '../modules'
@@ -19,31 +20,33 @@ const Container = styled.div`
 `
 
 const Rooms: React.FC = () => {
-  useAuth()
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const prevRoomList = useSelector((state: RootState) => state.room.list)
 
   const [rooms, setRooms] = useRooms([])
   const [visible, showModal, closeModal] = useBoolean(false)
   const [title, setTitle] = useInput(null)
-  const [onNewRoom, , offNewRoom] = useSocket({
-    to: 'room',
-    event: 'newRoom',
-    cb: (newRoom: RoomProps) => setRooms(newRoom),
-  })
 
   const onSave = useRequest({ type: REQUEST_CHAT_ROOM, payload: { title } })
   const fetchRoomList = useRequest({ type: FETCH_ROOM_LIST })
 
+  useAuth()
+  useSocketRegister({
+    to: 'room',
+    event: 'newRoom',
+    cb: (newRoom: RoomProps) => setRooms(newRoom),
+  })
+  useSocketRegister({
+    to: 'room',
+    event: 'invite',
+    cb: (roomId: string) => history.push(`/room/${roomId}`),
+  })
+
   useEffect(() => {
     fetchRoomList()
-    onNewRoom()
-
-    return () => {
-      offNewRoom()
-    }
-  }, [dispatch, rooms, fetchRoomList, onNewRoom, offNewRoom])
+  }, [dispatch, rooms, fetchRoomList])
 
   return (
     <Container>

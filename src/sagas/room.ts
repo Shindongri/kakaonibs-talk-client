@@ -103,7 +103,6 @@ const requestChatRoom = function*({ payload }: any) {
   }
 }
 
-//TODO::
 const requestInvite = function*({ payload }: any) {
   try {
     const {
