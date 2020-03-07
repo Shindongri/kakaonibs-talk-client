@@ -1,17 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { map, getOr } from 'lodash/fp'
+import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
-import TopHeader from '../components/TopHeader'
-import InputSearch from '../components/InputSearch'
-import Sidebar from '../components/Sidebar'
-import RoomCreateModal from '../components/RoomCreateModal'
-
-import RoomList from '../components/RoomList'
-import Room from '../components/Room'
-
-import useAuth from '../hooks/useAuth'
+import { TopHeader, InputSearch, Sidebar, RoomCreateModal, RoomList, Room } from '../components'
+import { useAuth } from '../hooks'
 
 import { FETCH_ROOM_LIST, REQUEST_CHAT_ROOM, Room as RoomProps } from '../modules/room'
 import { RootState } from '../modules'
@@ -75,15 +68,10 @@ const Rooms: React.FC = () => {
         <InputSearch placeholder="채팅방 이름, 참여자 검색" />
         <section>
           <RoomList>
-            {map(({ _id, opponent, updatedAt, title }) => (
-              <Room
-                key={_id}
-                _id={_id}
-                title={title}
-                opponent={getOr('', 'userName')(opponent)}
-                updatedAt={updatedAt}
-              />
-            ))([...prevRoomList, ...rooms])}
+            {map(({ _id, updatedAt, title }) => <Room key={_id} _id={_id} title={title} updatedAt={updatedAt} />)([
+              ...prevRoomList,
+              ...rooms,
+            ])}
           </RoomList>
         </section>
       </main>

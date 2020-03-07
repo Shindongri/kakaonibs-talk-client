@@ -25,7 +25,7 @@ type InputSearch = {
   placeholder?: string
 }
 
-const InputSearch: React.FC<InputSearch> = ({ placeholder }) => {
+export const InputSearch: React.FC<InputSearch> = ({ placeholder }) => {
   return (
     <Container>
       <StyledIcon type="search" />
@@ -33,5 +33,3 @@ const InputSearch: React.FC<InputSearch> = ({ placeholder }) => {
     </Container>
   )
 }
-
-export default InputSearch

@@ -11,8 +11,8 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: {
       '@primary-color': '#FFDF0A',
-      '@danger-color': '#212121'
-    }
+      '@danger-color': '#212121',
+    },
   }),
-  addWebpackPlugin(new AntdDayjsWebpackPlugin())
+  addWebpackPlugin(new AntdDayjsWebpackPlugin()),
 )

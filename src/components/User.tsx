@@ -31,7 +31,7 @@ const Col = styled.div`
   }
 `
 
-const User: React.FC<UserProps> = ({ _id, imageURL, userName }) => {
+export const User: React.FC<UserProps> = ({ _id, imageURL, userName }) => {
   return (
     <Row>
       <Col>
@@ -41,5 +41,3 @@ const User: React.FC<UserProps> = ({ _id, imageURL, userName }) => {
     </Row>
   )
 }
-
-export default User

@@ -1,22 +1,17 @@
 import { useEffect } from 'react'
 import socket from '../socket'
 
-type UseSocketProps = {
+type SocketProps = {
   to: string
   event: string
-  callBack: (a: any) => void
-  cleanUp: () => void
-  deps?: any[]
+  data?: any
+  cb?: (a: any) => void
 }
 
-const useSocket = ({ to, event, callBack, cleanUp, deps = [] }: UseSocketProps) => {
-  useEffect(() => {
-    socket(to).on(event, callBack)
+export const useSocket = ({ to, event, cb, data }: SocketProps) => {
+  const on = () => socket(to).on(event, cb ? cb : () => {})
+  const emit = () => socket(to).emit(event, data)
+  const disconnect = () => {}
 
-    return () => {
-      cleanUp()
-    }
-  }, deps)
+  return [on, emit, disconnect] as [typeof on, typeof emit, typeof disconnect]
 }
-
-export default useSocket

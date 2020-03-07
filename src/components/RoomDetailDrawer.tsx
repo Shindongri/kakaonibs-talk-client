@@ -11,7 +11,7 @@ interface ChatDetailDrawerProps {
   onClick: (id: string) => void
 }
 
-const RoomDetailDrawer: React.FC<ChatDetailDrawerProps> = ({ userList, visible, onClose, onClick }) => {
+export const RoomDetailDrawer: React.FC<ChatDetailDrawerProps> = ({ userList, visible, onClose, onClick }) => {
   return (
     <Drawer title="채팅방 서랍" placement="right" onClose={onClose} visible={visible} closable>
       <List
@@ -26,5 +26,3 @@ const RoomDetailDrawer: React.FC<ChatDetailDrawerProps> = ({ userList, visible, 
     </Drawer>
   )
 }
-
-export default RoomDetailDrawer

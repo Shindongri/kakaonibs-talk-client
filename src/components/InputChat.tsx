@@ -54,7 +54,7 @@ const props = ({ onUpload }: { onUpload: (file: File) => void }) => ({
   },
 })
 
-const InputChat: React.FC<InputChatProps> = ({ onInput, onUpload, onPressEnter }) => (
+export const InputChat: React.FC<InputChatProps> = ({ onInput, onUpload, onPressEnter }) => (
   <Container>
     <Upload {...props({ onUpload })}>
       <Icon type="upload" />
@@ -72,5 +72,3 @@ const InputChat: React.FC<InputChatProps> = ({ onInput, onUpload, onPressEnter }
     />
   </Container>
 )
-
-export default InputChat

@@ -7,7 +7,6 @@ import EmptyImage from '../assets/images/kakao-friends.png'
 
 const Container = styled.div`
   display: flex;
-  margin-right: 7px;
   margin: 0 7px 15px 15px;
   img {
     width: 48px;
@@ -39,7 +38,9 @@ const Chunk = styled.div`
     font-size: 14px;
   }
   .image {
+    max-width: 50%;
     margin-right: 7px;
+    background-color: #ffffff;
     border-radius: 4px;
     padding: 10px 5px;
   }
@@ -54,7 +55,7 @@ interface MessageToReceiveProps {
   createdAt: Date
 }
 
-const ChatToReceive: React.FC<MessageToReceiveProps> = ({ thumbnailImage, name, chat, image, createdAt }) => (
+export const ChatToReceive: React.FC<MessageToReceiveProps> = ({ thumbnailImage, name, chat, image, createdAt }) => (
   <Container>
     <img src={thumbnailImage || EmptyImage} alt="" />
     <Chunk>
@@ -64,5 +65,3 @@ const ChatToReceive: React.FC<MessageToReceiveProps> = ({ thumbnailImage, name, 
     <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
   </Container>
 )
-
-export default ChatToReceive

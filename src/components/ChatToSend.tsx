@@ -19,7 +19,7 @@ const Container = styled.div`
     background-color: #ffe934;
     padding: 10px 5px;
     font-size: 14px;
-    over-flow: hidden;
+    overflow: hidden;
   }
   .image {
     max-width: 50%;
@@ -36,7 +36,7 @@ interface MessageToSendProps {
   image?: string
 }
 
-const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat, image }) => (
+export const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat, image }) => (
   <Container>
     <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
     {image ? (
@@ -46,5 +46,3 @@ const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat, image }) =>
     )}
   </Container>
 )
-
-export default ChatToSend

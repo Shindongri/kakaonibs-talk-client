@@ -37,7 +37,7 @@ interface TopHeaderProps {
   onClick?: () => void
 }
 
-const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList, onClick }) => {
+export const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList, onClick }) => {
   return (
     <Container>
       <div>
@@ -56,8 +56,7 @@ const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList, onCl
                 </p>
               ))(menuList)}
             </div>
-          }
-        >
+          }>
           <StyledButton icon={icon} />
         </Popover>
       ) : (
@@ -66,5 +65,3 @@ const TopHeader: React.FC<TopHeaderProps> = ({ text, count, icon, menuList, onCl
     </Container>
   )
 }
-
-export default TopHeader

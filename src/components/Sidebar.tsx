@@ -20,7 +20,7 @@ const StyledIcon = styled(Icon)`
   color: #ffffff;
 `
 
-const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = () => {
   return (
     <Container>
       <Link to="/users">
@@ -35,5 +35,3 @@ const Sidebar: React.FC = () => {
     </Container>
   )
 }
-
-export default Sidebar
