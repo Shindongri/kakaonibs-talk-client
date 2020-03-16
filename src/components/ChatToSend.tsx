@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { dateConverter } from '../utils/date'
+import { imageUrl } from '../utils/image'
 
 const Container = styled.div`
   display: flex;
@@ -39,10 +40,6 @@ interface MessageToSendProps {
 export const ChatToSend: React.FC<MessageToSendProps> = ({ createdAt, chat, image }) => (
   <Container>
     <span className="time">{dateConverter(createdAt, 'HH:mm')}</span>
-    {image ? (
-      <img className="image" src={`${process.env.REACT_APP_API_HOST}/image/${image}`} alt="" />
-    ) : (
-      <span className="text">{chat}</span>
-    )}
+    {image ? <img className="image" src={imageUrl(image)} alt="" /> : <span className="text">{chat}</span>}
   </Container>
 )

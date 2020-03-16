@@ -33,10 +33,16 @@ const PopIn = keyframes`
 `
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
-  font-family: 'Open Sans', sans-serif;
-  padding: 60px 0 60px;
-
+  ${reset};
+  html, body {
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    height: 100%;
+  }
+  .root {
+    width: 100%;
+    height: 100%;
+  }
   main {
     animation: ${PopIn} .5s ease-in-out;
   }
@@ -59,10 +65,11 @@ const App: React.FC = () => (
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route exact path="/rooms" component={Rooms} />
+          <Route exact path="/" component={Users} />
+          <Route path="/rooms" component={Rooms} />
           <Route path="/room/:id" component={RoomDetail} />
           <Route path="/login" component={Login} />
-          <Route exact path={['/', '/users']} component={Users} />
+          <Route path="/users" component={Users} />
           <Route path="/setting" component={Setting} />
         </Switch>
         <GlobalStyle />

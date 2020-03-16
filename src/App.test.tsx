@@ -2,8 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { dateConverter } from './utils/date'
 
-import ChatToReceive from './components/ChatToReceive'
-import ChatToSend from './components/ChatToSend'
+import { ChatToReceive, ChatToSend } from './components'
 
 /* Chat */
 describe('Chat', () => {

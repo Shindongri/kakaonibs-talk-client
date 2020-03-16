@@ -5,7 +5,7 @@ import { map } from 'lodash/fp'
 import styled from 'styled-components'
 
 import { TopHeader, InputSearch, Sidebar, RoomCreateModal, RoomList, Room } from '../components'
-import { useAuth, useBoolean, useSocketRegister, useInput, useRooms, useRequest, useModal } from '../hooks'
+import { useAuth, useBoolean, useSocketRegister, useInput, useRooms, useRequest } from '../hooks'
 
 import { FETCH_ROOM_LIST, REQUEST_CHAT_ROOM, Room as RoomProps } from '../modules/room'
 import { RootState } from '../modules'

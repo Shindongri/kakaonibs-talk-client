@@ -31,5 +31,5 @@ export const useModal = ({
         onOk,
         onCancel,
       }),
-    [],
+    [title, okText, okType, cancelText, onOk, onCancel],
   )
